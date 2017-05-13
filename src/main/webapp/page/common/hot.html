@@ -1,0 +1,59 @@
+<%@page pageEncoding="UTF-8"%>
+<!--sidebar-->
+<style>
+    .logged{
+        padding:30px 20px 20px 20px;
+    }
+    .logged a{
+        color: #666;
+        font-size: 14px;
+        margin-right:20px;
+        margin-top:10px;
+    }
+    .logged a:hover{
+        color: #7e0c05;
+    }
+    .d1{
+        margin-right:20px;
+        margin-top:10px;
+    }
+</style>
+<section class="rightwraper" id="mainright">
+    <div class="grayarea">
+        <div class="c254">
+            <!--公告-->
+            <div class="notice rbox">
+                <h3>登录信息</h3>
+            </div>
+
+            <!-- 未登陆的模块，默认显示 -->
+            <div id="hui-side-sign-in" name="no_logged">
+                <div class="login-image"><img src="/images/hi.png" width="100%"></div>
+                <div class="hello"> <a href="">Hi，你好！</a>
+                </div>
+                <div class="ft" >
+                    <a href="#" onclick="openLogin(); return false">登录</a>
+                    <a href="/register.html" class="btn3" target="_blank">注册</a>
+                </div>
+            </div>
+
+            <!-- 已登陆的模块，默认不显示 -->
+            <div class="logged" name="logged" style="display: none">
+                <div style="margin-bottom:50px;font-size: 24px;font-family: 'Microsoft YaHei', 'SimSun'">你好,<div name="user_name" style="display: inline"></div></div>
+                <div class="d1"><a href="#"> 我要分享</a> <a href="#">我要爆料</a></div>
+                <div class="d1"><a href="/center/info" target="_blank">个人中心</a> <a href="#" onclick="cancel();return false">退出</a></div>
+            </div>
+    </div>
+    <!--灰色块-->
+    <div class="grayarea rbox clearfix">
+        <!--热门排行-->
+        <div class="c254 clearfix" id="hot">
+            <h3>热门排行</h3>
+            <blockquote>
+                <div class="cat_top10" id="hotList">
+                    <!-- js加载热门-->
+                </div>
+            </blockquote>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="woolSharing:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="woolSharing.war">
+      <element id="artifact" artifact-name="woolSharing:war exploded" />
+    </root>
+  </artifact>
+</component>

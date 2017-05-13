@@ -1,0 +1,59 @@
+#content{height: 400px;padding: 66px 210px;}
+.left{float: left;}
+.content_right{margin-left: 50px;width: 650px;}
+.input_div{width: 100%;margin-bottom: 20px;}
+.input_div span{text-align: right;display: inline-block;width:100px;font-size: 14px;font-family: "Microsoft YaHei", "SimSun";margin-right: 10px;color: #8a8a8a;}
+.input_div .r{text-align: left !important;width: 200px !important;}
+.input_div .input_text{width: 200px;height: 25px;border: 1px solid #ccc;padding: 8px;}
+
+
+
+a{text-decoration: none;color: #333333;}
+.left-memu{ width:200px; margin-right:8px; background:none}
+.left-memu ul li{line-height:43px; padding:0 20px; height:43px; overflow:hidden;border-bottom:1px solid #efefef}
+.left-memu ul li a{ display:block;line-height:36px; overflow:hidden;_float:left;zoom:1;outline:none; font-size:14px}
+.left-memu ul li.on{border-right:5px solid #CE4445;}
+.left-memu ul li:hover{background:#f5f5f5}
+.left-memu ul li img{vertical-align:middle;display:inline}
+.title1 {font-weight: normal;font-size: 18px;border-bottom: 1px solid #ccc;line-height: 40px;padding-left: 20px;margin-bottom: 12px;font-family: "Microsoft YaHei", "SimSun";}
+.title1 a{color: #2A9DDB;}
+
+.content_right table{ width: 100%;table-layout: fixed;}
+.content_right thead th{padding-left: 10px; background-color: #F5F5F5;height: 30px;font-weight: normal;font-size: 14px;text-align: left;}
+.content_right tbody td{padding-left: 10px;text-align: left;height: 25px;line-height: 25px;border-bottom: 1px solid #F5F5F5;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;color: #333333;font-size: 12px;font-family: "Microsoft YaHei", "SimSun";}
+.page{padding-top: 5px;width: 100%;border-top:1px solid #ccc;position: absolute;top:360px;}
+.page span{}
+.page button{width: 80px;height: 22px;margin-left: 10px;float: right;cursor:pointer}
+
+.a-upload {
+    padding: 4px 10px;
+    height: 20px;
+    line-height: 20px;
+    position: relative;
+    cursor: pointer;
+    color: #888;
+    background: #fafafa;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+    display: inline-block;
+    *display: inline;
+    *zoom: 1
+}
+
+.a-upload  input {
+    position: absolute;
+    font-size: 100px;
+    right: 0;
+    top: 0;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    cursor: pointer
+}
+
+.a-upload:hover {
+    color: #444;
+    background: #eee;
+    border-color: #ccc;
+    text-decoration: none
+}

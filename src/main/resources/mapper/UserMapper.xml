@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shisheng.dao.UserMapper">
+
+
+  <insert id="addUser" parameterType="User">
+    INSERT ignore INTO user (id,login_name,nickname,password,register_time)
+    VALUES
+    (#{id},#{loginName} , #{nickname},#{password},#{registerTime})
+
+  </insert>
+
+
+  <select id="getUserByUserName" resultType="User">
+    SELECT  * FROM  user WHERE login_name = #{loginName}
+  </select>
+
+  <update id="updateUser" parameterType="User">
+    UPDATE user
+    set user.age=#{age},
+     user.phone=#{phone},
+     user.sex=#{sex},
+     user.email=#{email},
+     user.nickname=#{nickname}
+    WHERE user.login_name = #{loginName}
+  </update>
+
+    <update id="updatePassword">
+        UPDATE user set user.password = #{password}
+        WHERE user.login_name = #{loginName}
+    </update>
+
+</mapper>

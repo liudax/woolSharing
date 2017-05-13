@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.shisheng.dao.HotWordsMapper" >
+
+
+  <insert id="insert" parameterType="HotWD" >
+    insert into hot_words_detailed (id, content)
+    values (#{id,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR})
+  </insert>
+
+  <select id="getAll" resultType="HotW">
+    SELECT * FROM hot_words
+  </select>
+  
+  <insert id="addNewWords" parameterType="HotWD">
+    INSERT INTO hot_words (content,count)
+    VALUES
+    <foreach item="words" collection="news" separator=",">
+      (#{words.content}, #{words.count})
+    </foreach>
+  </insert>
+
+  <select id="getNewWords" resultType="HotW">
+    SELECT
+	a.content,
+	COUNT(*) AS count
+    FROM
+	hot_words_detailed a WHERE a.content NOT in (SELECT hot_words.content FROM hot_words )
+    GROUP BY
+	a.content
+  </select>
+
+  <update id="updateOldWords">
+    UPDATE hot_words h1
+    LEFT JOIN (
+    SELECT
+        a.content,
+        COUNT(*) AS count
+    FROM
+        hot_words_detailed a WHERE a.content  in (SELECT hot_words.content FROM hot_words )
+    GROUP BY
+        a.content
+    ) h2 ON h1.content = h2.content
+    SET h1.count = h1.count + h2.count
+  </update>
+  
+  <delete id="deleteAll">
+    delete FROM hot_words_detailed
+  </delete>
+</mapper>

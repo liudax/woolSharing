@@ -1,0 +1,17 @@
+#footer{width:100%;margin:8px auto 0;overflow:hidden;    border-top: 1px solid #E9E9E9;}
+footer{margin:0;padding:0;border:0;font-weight:inherit;font-style:inherit;font-size:12px;font-family:Microsoft Yahei,simsun;background:transparent}
+.clearfix:after {content:"."; display:block; height:0; clear:both; visibility:hidden;}
+.clearfix {zoom:1;}
+.central{max-width:480px;_width:830px;padding:0 30px 20px;margin:0 auto;text-align:left;position:relative}
+.central h4 {font:bold 14px/60px simsun;color:#000}
+.menu-item-weixin {float:left;}
+.menu-item-weixin img{width: 120px; height: 120px}
+.menu-item{float:left;}
+.menu-item ul { width:160px;}
+.menu-item ul li { float:left; overflow:hidden; padding-left:10px; width:120px;line-height:24px}
+.menu-item ul li a{color:#666;}
+.menu-item ul li a:hover{color:#444;}
+.menu-item-weixin {float:left;}
+.menu-item-weixin img{width: 120px; height: 120px}
+.copyright{text-align:center;clear:both;background:#000;color:#eee;padding:10px 0}
+.copyright a{color:#eee}

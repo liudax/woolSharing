@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登陆</title>
+    <link href="css/regist.css" rel="stylesheet">
+    <script src="/js/jquery-1.9.1.min.js"></script>
+    <link href="/css/footer.css" rel="stylesheet">
+    <style>
+        *{margin:0;padding:0;}
+        .header{width: 100%;height: 90px;background-color: #f0f0f0;margin-bottom: 20px}
+        .title{float:left;vertical-align: middle;width: 500px;height: 100%;padding-left: 150px;}
+        .title img{float: left; }
+        .line{margin-bottom: 5px;font-family: 'revolt', georgia, 'Microsoft yahei';font-size: 24px;color: rgb(216,60,60);margin-top: 10px;margin-left: 20px;padding-left: 20px;width: 200px;display: inline-block;height: 70px;line-height: 70px;border-left: 1px solid #dcdcdc;}
+        .search_box{padding: 3px 8px;margin-left: 100px;margin-top:27px;border: 1px solid #8a8a8a;border-radius: 5px;background-color: rgb(255,255,255);display: inline-block;width: 340px;height: 30px;}
+        .search_box input{font-size: 14px;font-family: "Microsoft YaHei", "SimSun";border: none;float: left;width: 310px;height: 30px;outline: none;}
+    </style>
+</head>
+<body>
+<header class="header">
+    <div class="title">
+        <img src="images/logo.png" width="177" height="84">
+        <span class="line">登陆</span>
+    </div>
+    <div class="search_box">
+        <input id="search_value" type="text" placeholder="超值大礼包">
+        <a href="#" onclick="openSearch();return false"><img src="/images/search_icon.jpg" width="30" height="30"></a>
+        <script>
+            function openSearch() {
+                var search = document.getElementById("search_value").value;
+                window.location="/search?search="+search;
+            }
+        </script>
+    </div>
+</header>
+
+<div class="register_box">
+    <div class="form-login form-reg fl"  style="margin-top: 50px;height: 300px">
+        <input name="modelid" type="hidden" value="10"/>
+        <div class="input">
+            <label>用户名：</label>
+            <input type="text"  id="loginName"  size="36" class="input-text">
+            <div class="check" ></div>
+        </div>
+        <div class="input">
+            <label>密码：</label>
+            <input type="password" id="password"  size="36" class="input-text">
+            <div class="check"></div>
+        </div>
+        <div class="submit submit2">
+            <input type="button" onclick="login()" value="登陆">
+        </div>
+
+    </div>
+</div>
+
+<footer id="footer" class="clearfix">
+    <!--start 底部菜单-->
+    <div class="central clearfix">
+        <div class="menu-item-weixin"> </div>
+        <div class="menu-item">
+            <h4>好好搞羊毛</h4>
+            <ul>
+                <li><a href=""  target="_blank">关于我们</a></li>
+                <li><a href="">友情链接</a></li>
+                <li><a href="">加入我们 </a></li>
+            </ul>
+        </div>
+        <div class="menu-item">
+            <h4>服务与支持</h4>
+            <ul class="sub-menu">
+                <li><a href="">隐私条款</a></li>
+                <li><a href="">用户爆料</a></li>
+                <li><a href="">商家合作</a></li>
+            </ul>
+        </div>
+        <div class="menu-item">
+            <h4>关注我们</h4>
+            <ul class="sub-menu">
+                <li><a href="www.sina.com.cn"  target="_blank">新浪微博</a></li>
+                <li><a href="www.tencent.com"  target="_blank">腾讯微博</a></li>
+                <li><a href="#" class="wx" target="_blank">公众微信</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="copyright">渝ICP备110***83号-n copyrights 2017
+        ddd 版权所有
+    </div>
+    <div class="clear"></div>
+</footer>
+</body>
+<script type="text/javascript">
+    function login(){
+        var loginName = $("#loginName").val();
+        var password = $("#password").val();
+        //var code = $("#l_code").val();
+       // var remember = $("#remember").is(":checked");
+        $.ajax({
+            url:"/user/login",
+            type:"post",
+            data:{loginName:loginName,password:password},
+            success:function (result) {
+                if(result.success){
+                   alert("登陆成功");
+                   window.location.href="/center/info";
+                }else{
+                    alert(result.message);
+                }
+            }
+        })
+    }
+</script>
+</html>

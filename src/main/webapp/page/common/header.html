@@ -1,0 +1,77 @@
+<%@page pageEncoding="UTF-8"%>
+
+
+<header class="header">
+    <section class="header-container">
+        <div class="wraper"><a href="/" title="title" id="logo" class="fl"><img src="/images/logo.png" alt="logo-image" width="177" height="84"></a>
+            <!--搜索-->
+            <div id="searchwrap" class="fr">
+                <div class="searchbox">
+                    <div class="searchfielddiv" id="searchfielddiv">
+                        <input id="search_value" path="${requestScope['javax.servlet.forward.request_uri']}" value="${search}" class="searchfield ui-autocomplete-input">
+                    </div>
+                    <div class="searchbutton" id="searchButton" onclick="openSearch()">搜索</div>
+                </div>
+            </div>
+            <script>
+                function openSearch() {
+                    var search = document.getElementById("search_value").value;
+                    window.open("/search?search="+search);
+                }
+            </script>
+        </div>
+    </section>
+    <nav id="nav">
+        <div class="wraper">
+            <ul class="fl sitenav">
+                <li><a href="/index">首页</a></li>
+                <li><a href="/zn">站内推荐</a></li>
+                <li><a href="/yh">用户分享</a></li>
+                <li><a href="/mall">商家导航</a></li>
+            </ul>
+
+            <!-- 已登陆的模块，默认不显示 -->
+            <div class="top-login" name="logged" style="display: none">
+                <a href="/center/info" target="_blank" _hover-ignore="1"><strong name="user_name"></strong></a>
+                <a href="#" _hover-ignore="1" onclick="cancel(); return false"><span>退出</span></a>
+            </div>
+
+            <!-- 未登陆的模块，默认显示 -->
+            <div class="top-login" name="no_logged">
+                <a href="#" _hover-ignore="1" onclick="openLogin(); return false"><span>登陆</span></a>
+                <a href="/register.html" target="_blank" _hover-ignore="1"><span>注册</span></a>
+            </div>
+
+
+
+            <div class="search" id="searchBox">
+                <p><form action="/search" method="get">
+                    <input type="text" name="search" placeholder="请输入你想要查询的优惠.." class="search_a">
+                    <input type="submit" class="search_b">
+                </form></p>
+            </div>
+            <style>
+                .fiexd1{
+                    position: fixed;
+                    top:0;
+                }
+                .fiexd2{
+                    position: fixed;
+                    top:33px;
+                }
+            </style>
+        </div>
+    </nav>
+</header>
+<script type="text/javascript">
+    var path = "${requestScope['javax.servlet.forward.request_uri']}";
+    $("#nav a").each(function () {
+        var href = this.getAttribute("href");
+        if(path=="/" && href =="/index"){
+            this.parentNode.className="current";
+        }
+        if(href==path){
+            this.parentNode.className="current";
+        }
+    })
+</script>

@@ -1,0 +1,70 @@
+@charset "utf-8";
+
+
+/*sjdqBox*/
+.sjdqBgBox { width:100%; height:100%;padding:15px 0 20px;}
+dl.sjdqBox { margin-bottom:5px; margin-left: -7px;}
+dl.sjdqBox dt { margin-left: 7px; width:148px; margin-bottom:20px; color:#333; height:24px; line-height:24px; font-weight:bold; }
+
+dl.sjdqBox dd {width:192px; height:223px; float:left; margin:0 0 10px 7px; padding:0;}
+.sjdqOutBorder {border:1px solid #dcdcdc; width:190px; height:190px; position:relative;}
+.sjdqInnerBorder {border:1px solid #fff; width:188px; height:188px; }
+.sjdqBot { width:190px; height:30px; border:1px solid #e5e5e5; border-top:none; -webkit-border-radius:0 0 3px 3px; -moz-border-radius:0 0 3px 3px; border-radius:0 0 3px 3px;}
+.sjdqBotLeft { width:94px; height:30px; line-height:30px; border-right:1px solid #e5e5e5; float:left; }
+.sjdqBotRight { width:95px;height:30px; line-height:30px; float:left;}
+.sjdqBot a {width:auto; height:30px; line-height:30px; display:block; color:#5183c0; text-align: center;}
+dl.sjdqBox dd  a.sjdqLogo,.couponRBox  a.sjdqLogo{ height:80px; width:160px; display:block;text-align:center; margin:50px auto 0;}
+dl.sjdqBox dd  a.sjdqLogo img ,.couponRBox  a.sjdqLogo img { width:160px; height:80px;}
+dl.sjdqBox dd  a.sjdqName,.couponRBox  a.sjdqName { height:30px; display:none;text-align:center; color:#666;}
+.sjdqBotLeft a:link,.sjdqBotLeft a:visited { background-color:#f5f5f5; color:#097FB6; }
+.sjdqBotLeft a:hover,.sjdqBotLeft a:active { background-color:#7e0c05; color:#fff; text-decoration: none; border-radius: 0 0 0 3px;}
+.sjdqBotRight a:link,.sjdqBotRight a:visited { background-color:#f5f5f5; border-left:1px solid #fbfbfb;color:#097FB6; }
+.sjdqBotRight a:hover,.sjdqBotRight a:active { background-color:#7e0c05; color:#fff;  border-left:1px solid #7e0c05; text-decoration: none;border-radius: 0 0 3px 0;}
+
+
+.sjdqTipBox { width:191px; height:191px; color:#666; position:absolute; top:0px; left:0px; z-index:99; visibility:hidden;}
+.sjdqOutBorder:hover .sjdqTipBox {visibility:visible;}
+.sjdqOutBorder:hover .sjdqTip {background:#000;filter:alpha(opacity=80);
+	-moz-opacity:0.8;
+	-khtml-opacity: 0.8;
+	opacity: 0.8; width:170px; height:182px; padding:8px 10px 0; position:relative; visibility:visible;}
+.sjdqOutBorder:hover .sjdqTip span.blue { font-weight:bold; margin-bottom:7px; display:block; visibility:visible; line-height:30px;}
+.sjdqOutBorder:hover .tipInfo { color:#fff; font-size:12px; line-height:1.6em; margin-bottom:5px; visibility:visible; min-height:80px; }
+.sjdqOutBorder:hover .tipLine { padding-top:8px; line-height:1.6em; visibility:visible; }
+.sjdqOutBorder:hover .tipLine strong{ color:#fff;}
+.sjdqOutBorder:hover .tipLine span.red{ color:#fdcc38;}
+.sjdqOutBorder:hover .tipArrowBot {display: none; background:url(../images/tipArrow.png) no-repeat center top; width:184px; height:8px; position:absolute; left:0; top:170px;}
+.sjdqTipBox .sjdqTip .blue a { color:#fff; }
+.sjdqTipBox .sjdqTip .blue a:hover { color:#5183C0; text-decoration:underline; }
+
+dl.sjdqBox dd.mrNone { margin-right:0;}
+.bgNone { background:none;}
+/*sjdqBox*/
+
+/*sjdq details*/
+.sjdqInfoBox { padding:0 0 25px; width:100%; overflow:hidden;}
+.sjdqPic { width:190px; height:190px; float:left; margin-right:24px;}
+.sjdqPic a { display:block; width:188px; height:188px; text-align:center; transition: ease-in-out 0.8s; -webkit-transition: ease-in-out 0.8s; -moz-transition: ease-in-out 0.8s; -o-transition: ease-in-out 0.8s; -ms-transition: ease-in-out 0.8s;}
+.sjdqPic a:link,.sjdqPic a:visited {border:1px solid #e5e5e5;}
+.sjdqPic a:hover,.sjdqPic a:active {border:1px solid #7e0c05;}
+.sjdqPic a img { width:184px; height:92px; margin-top:49px;}
+.sjdqInfo { width:776px; float:left; line-height:1.9em;}
+.mallAddress { margin-top:17px; overflow:hidden; margin-bottom: 10px;}
+span.mallName {color:#666; font-size:12px; width:75px; float:left; display:block; text-align:right;}
+.mallInfoBox,.mallInfoBox2  { margin-top:3px; height:100%;}
+.mallInfoBox2 { background-position:15px -22px;}
+.mallInfo,.mallInfo p,.mallInfo p.p_excerpt{color:#666; float:left; text-indent:0; margin:0; font-size:12px;}
+.sjdqBlueBg .fontTitle { width:150px; float:left; height:36px; line-height:36px; font-weight: bold;}
+.sjdqBlueBg .sjdqMore { width:54px; float:right; height:36px; line-height:36px;}
+.sjdqWrapBox .left_box { width:auto; float:none; padding-right:0;padding-left:0; margin-left: -15px;}
+.sjdqWrapBox .left_box .perContentBox { margin:0 0 15px 15px;}
+
+/* sjdq category list */
+.sjdqList .sjdh { width:100%; height:100%; padding: 30px 0 10px; border-bottom: 1px dotted #dcdcdc;}
+.sjdqList .sjdh .fontTitle { font-size:18px; font-weight: normal;}
+.sjdqList .aclist { float:right; margin-top:-20px; margin-right:6px; }
+.sjdqList .aclist a { color:#666; font-size:12px; margin-right:10px; margin-left:10px; }
+.sjdqList .fontTitle{ font-weight: bold; font-size: 15px; font-family: "Microsoft YaHei","SimSun";}
+
+/* coupon */
+.coupon_edit a { font-size:12px; }

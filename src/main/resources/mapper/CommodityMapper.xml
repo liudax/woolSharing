@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.shisheng.dao.CommodityMapper" >
+  
+  <insert id="addCommodity">
+    insert into commodity (
+    id, title, price_point,
+      state, type, platform_id,
+      link, editor_id, user_id,
+      child_type_id, parent_type_id, image_addr,
+      label, share_time, reason
+      )
+    values (#{id,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{pricePoint,jdbcType=VARCHAR},
+      #{state,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR}, #{platformId,jdbcType=VARCHAR},
+      #{link,jdbcType=VARCHAR}, #{editorId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR},
+      #{childTypeId,jdbcType=VARCHAR}, #{parentTypeId,jdbcType=VARCHAR}, #{imageAddr,jdbcType=VARCHAR},
+      #{label,jdbcType=VARCHAR}, #{shareTime,jdbcType=TIMESTAMP}, #{reason,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+
+
+  <select id="getCommodityDetail" resultType="map" >
+    <include refid="pup"></include>
+    WHERE a.id =#{id}
+  </select>
+
+
+  <select id="getDetailedList" resultType="map" parameterType="com.shisheng.util.QueryPojo">
+    <include refid="pup"></include>
+    WHERE 1=1
+    AND
+    (
+    <foreach collection="states" item="state" separator="or">
+        a.state = #{state}
+    </foreach>
+    )
+    <if test="null!=typeId and ''!=typeId">
+      AND  (t1.id = #{typeId} OR  t2.id = #{typeId})
+    </if>
+    <if test="null!=search and ''!=search">
+      AND (a.title LIKE '%${search}%' OR  a.label LIKE '%$(search)%')
+    </if>
+    <if test="null!=shareType and ''!=shareType">
+      AND a.type = #{shareType}
+    </if>
+    <if test="null!=patformId and ''!=patformId">
+      AND platform.id = #{patformId}
+    </if>
+    <if test="null!=userId and ''!=userId">
+      AND a.user_id = #{userId}
+    </if>
+    <if test="null!=order and ''!=order">
+        ORDER BY ${order}
+    </if>
+    LIMIT #{offset},#{rows}
+  </select>
+
+
+  <sql id="pup">
+    SELECT
+      a.id AS id,
+      a.title AS title,
+      a.price_point pricePoint,
+      a.type,
+      a.state,
+      (CASE a.type
+          WHEN '站内推荐' THEN '/zn'
+          WHEN '用户分享' THEN '/yh'
+          ELSE  '/index' END) AS typeLink,
+      platform.platform_name AS platformName,
+       platform.id AS platformId,
+      `user`.nickname ,
+      `user`.id AS userId,
+      a.reason ,
+      a.image_addr AS imageAddr,
+      t1.type_name AS childType,
+      t2.type_name AS parentType,
+      IFNULL(f.comment_number,0) AS commentNumber,
+      a.share_time AS shareTime,
+      a.link,
+      a.label
+  FROM
+          commodity a
+  LEFT  JOIN platform  on platform.id =  a.platform_id
+  LEFT JOIN child_commodity_type t1 on t1.id = a.child_type_id
+  LEFT JOIN parent_commodity_type t2 ON t2.id = a.parent_type_id
+  LEFT JOIN user  on user.id = a.user_id
+  LEFT JOIN (
+      SELECT m.commodity_id , COUNT(m.id) AS comment_number FROM `comment` m  GROUP BY m.commodity_id
+    ) f ON f.commodity_id = a.id
+  </sql>
+</mapper>

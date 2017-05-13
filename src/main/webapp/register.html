@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>会员注册</title>
+    <link href="css/regist.css" rel="stylesheet">
+    <script src="/js/jquery-1.9.1.min.js"></script>
+   <link href="/css/footer.css" rel="stylesheet">
+    <style>
+        *{margin:0;padding:0;}
+        .header{width: 100%;height: 90px;background-color: #f0f0f0;margin-bottom: 20px}
+        .title{float:left;vertical-align: middle;width: 500px;height: 100%;padding-left: 150px;}
+        .title img{float: left; }
+        .line{margin-bottom: 5px;font-family: 'revolt', georgia, 'Microsoft yahei';font-size: 24px;color: rgb(216,60,60);margin-top: 10px;margin-left: 20px;padding-left: 20px;width: 200px;display: inline-block;height: 70px;line-height: 70px;border-left: 1px solid #dcdcdc;}
+        .search_box{padding: 3px 8px;margin-left: 100px;margin-top:27px;border: 1px solid #8a8a8a;border-radius: 5px;background-color: rgb(255,255,255);display: inline-block;width: 340px;height: 30px;}
+        .search_box input{font-size: 14px;font-family: "Microsoft YaHei", "SimSun";border: none;float: left;width: 310px;height: 30px;outline: none;}
+    </style>
+</head>
+<body>
+<header class="header">
+    <div class="title">
+        <img src="images/logo.png" width="177" height="84">
+        <span class="line">会员注册</span>
+    </div>
+    <div class="search_box">
+        <input id="search_value" type="text" placeholder="超值大礼包">
+        <a href="#" onclick="openSearch();return false"><img src="/images/search_icon.jpg" width="30" height="30"></a>
+        <script>
+            function openSearch() {
+                var search = document.getElementById("search_value").value;
+                window.location="/search?search="+search;
+            }
+        </script>
+    </div>
+</header>
+
+<div class="register_box">
+    <div class="form-login form-reg fl">
+        <input name="modelid" type="hidden" value="10"/>
+        <div class="input">
+            <label>用户名：</label>
+            <input type="text" placeholder="6-16位以字母开头的字母数字组合"  id="loginName"  size="36" class="input-text get_focus">
+            <div class="check" ></div>
+        </div>
+        <div class="input">
+            <label>密码：</label>
+            <input type="password" placeholder="4-20位以字母开头的字母数字组合" id="password"  size="36" class="input-text get_focus">
+            <div class="check"></div>
+        </div>
+        <div class="input">
+            <label>确认密码：</label>
+            <input type="password"  placeholder="两次密码必须相同"  id="r_password" size="36" class="input-text get_focus">
+            <div class="check"></div>
+        </div>
+        <div class="input">
+            <label>昵称：</label>
+            <input type="text" placeholder="不能为空" id="nickname"  size="36" class="input-text get_focus">
+            <div class="check"></div>
+        </div>
+        <div class="input">
+            <label>验证码：</label>
+            <input type="text" id="code"  size="10" class="input-text">
+            <img id='captchaImage'  src='/captcha'>
+        </div>
+
+        <div class="submit submit2">
+            <input type="button" onclick="register()" value="立即注册">
+        </div>
+
+    </div>
+</div>
+
+<footer id="footer" class="clearfix">
+    <!--start 底部菜单-->
+    <div class="central clearfix">
+        <div class="menu-item-weixin"> </div>
+        <div class="menu-item">
+            <h4>好好搞羊毛</h4>
+            <ul>
+                <li><a href=""  target="_blank">关于我们</a></li>
+                <li><a href="">友情链接</a></li>
+                <li><a href="">加入我们 </a></li>
+            </ul>
+        </div>
+        <div class="menu-item">
+            <h4>服务与支持</h4>
+            <ul class="sub-menu">
+                <li><a href="">隐私条款</a></li>
+                <li><a href="">用户爆料</a></li>
+                <li><a href="">商家合作</a></li>
+            </ul>
+        </div>
+        <div class="menu-item">
+            <h4>关注我们</h4>
+            <ul class="sub-menu">
+                <li><a href="www.sina.com.cn"  target="_blank">新浪微博</a></li>
+                <li><a href="www.tencent.com"  target="_blank">腾讯微博</a></li>
+                <li><a href="#" class="wx" target="_blank">公众微信</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="copyright">渝ICP备110***83号-n copyrights 2017
+        ddd 版权所有
+    </div>
+    <div class="clear"></div>
+</footer>
+
+<script>
+    var isRight = {
+        loginName:false,
+        password:false,
+        r_password:false,
+        nickname:false
+    }
+    var user = {
+        loginName:"",
+        password:"",
+        nickname:"",
+    }
+    $(function () {
+        //获得焦点 清空检查栏目信息
+        $(".get_focus").each(function () {
+            $(this).focus(function () {
+                $(this).next("div").empty();
+            })
+        });
+        $('#captchaImage').click(function()
+        {
+            $('#captchaImage').attr("src", "/captcha?timestamp=" + (new Date()).valueOf());
+        });
+
+
+        /**
+         * 验证
+         */
+        $("#loginName").blur(function () {
+            var check =/^[a-zA-Z][a-zA-Z0-9]{5,15}$/;
+            var val = $(this).val();
+            var node = this;
+            var flag = check.test(val);
+            if(flag){
+                $.ajax({
+                    url:"/user/checkLoginName",
+                    data:{loginName:val},
+                    success:function (result) {
+                        if(result){
+                            check_show(node,true);
+                        }else{
+                            check_show(node,false,"已经被注册了");
+                        }
+                    }
+                })
+            }else{
+                check_show(this,false);
+            }
+        });
+        $("#password").blur(function () {
+            var check =/^[a-zA-Z][a-zA-Z0-9]{3,19}$/;
+            var val = $(this).val();
+            check_show(this,check.test(val));
+        });
+        $("#r_password").blur(function () {
+            var val = $("#password").val();
+            var r_val =  $(this).val();
+            check_show(this,val==r_val);
+        });
+        $("#nickname").blur(function () {
+            var check =/\S/;
+            var val = $(this).val();
+            check_show(this,check.test(val));
+        });
+
+
+    })
+
+    function check_show(node,success,message){
+        var name = $(node).attr("id");
+        var check_div = $(node).next("div");
+        var msg = $(node).attr("placeholder");
+        if(message!=undefined){
+            msg = message;
+        }
+        var html = "";
+        if(success){
+            isRight[name]=true;
+            html = "<img src='/images/check_y.png' width='20' height='20'>";
+        }else{
+            isRight[name]=false;
+            html = "<span>"+msg+"</span>";
+        }
+        $(check_div).append(html);
+    }
+
+    function  register() {
+        if(isRight.loginName && isRight.password && isRight.r_password && isRight.nickname){
+            var loginName = $("#loginName").val();
+            var password = $("#password").val();
+            var nickname = $("#nickname").val();
+            var code =$("#code").val();
+            $.ajax({
+                url:"/user/register",
+                type:"post",
+                data:{
+                    loginName:loginName,
+                    password:password,
+                    nickname:nickname,
+                    code:code
+                },
+                success:function (result) {
+                    if(result.success){
+                        alert(result.message);
+                        window.location="/index";
+                    }else{
+                        alert(result.message);
+                    }
+                }
+            })
+        }
+
+    }
+    
+</script>
+
+</body>
+</html>

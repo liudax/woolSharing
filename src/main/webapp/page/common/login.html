@@ -1,0 +1,88 @@
+<%@page pageEncoding="UTF-8"%>
+<div class="loginBox" id="loginBox">
+    <table width="100%">
+        <thead>
+        <td colspan="2" class="thead">用户登录  <a class="login_btn" href="#" onclick="closeLogin(); return false;"><img style="float: right;margin-top: -10px;margin-right: -6px" src="/images/close.png" width="25" height="25"></a></td>
+        </thead>
+        <tbody>
+        <tr>
+            <th><em class="red">*</em> 账号：</th>
+            <td><input type="text" id="loginName" placeholder="请输入用户名" class="ipt"></td>
+        </tr>
+        <tr>
+            <th><em class="red">*</em> 密码：</th>
+            <td><input type="password" id="password" placeholder="请输入密码"  class="ipt"></td>
+        </tr>
+        <!--<tr>
+            <th><em class="red">*</em> 验证码：</th>
+            <td>
+                <input type="text" id="l_code" style="width: 70px" class="ipt">
+                <img id="captchaImage" src="/captcha" style="height:35px;margin-bottom: -25px; margin-right: 89px; float:right">
+            </td>
+        </tr>-->
+        <tr>
+            <th class="pd15"></th>
+            <td class="pd15">
+                <button id="submit_btn" type="button" onclick="login()">登录</button>
+                <p class="line"><input type="checkbox" id="remember" value=""> <label for="remember">记住我</label></p>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div id="mask"></div>
+<script type="text/javascript">
+    var localStorage =  window.localStorage;
+    var loginName = localStorage.getItem("loginName");
+    var password = localStorage.getItem("password");
+
+    if(loginName!=null && password!=null){
+        console.log("执行了");
+        $("#loginName").val(loginName);
+        $("#password").val(password);
+    }
+</script>
+<style type="text/css">
+    .loginBox th{
+        text-align: right;
+    }
+    .loginBox {
+        position: fixed;
+        visibility:hidden;
+        top:0;
+        bottom:0;
+        left:0;
+        right:0;
+        z-index:1001;
+        background-color:#e6e6e6;
+        margin:auto;display:block;
+        width:350px;height: 213px;
+        padding:5px 5px 20px 20px;
+        border:2px solid #ccc;
+        border-radius:6px;}
+    .ipt {border:1px solid #ddd;
+        padding:10px 5px;
+        width: 240px;
+        outline:none;
+        border-radius:3px;
+        background-color:#fff;
+        font-family: 'revolt',georgia,'Microsoft yahei';}
+    .ipt:focus {background-color:#fefefe;box-shadow:0 0 3px #aaa;}
+    .thead {font-weight:bold;font-size:20px;
+        padding-bottom:20px!important;text-shadow:1px 1px 1px #fff;}
+    .loginBox th {color:#666;font-size:12px;
+        font-weight:bold;text-shadow: 1px 1px 1px #fff;}
+    .loginBox td {padding:5px 0;}
+    #submit_btn {background-color:#7e0c05;border:none;
+        border-radius:5px;box-shadow:0 0 3px #aaa;width:98px;height:41px;
+        line-height:41px;color:#fff;font-size:18px;font-weight:bold;
+        cursor:pointer;margin-right:20px;display:block;outline:none;
+        text-shadow:0 1px 1px #777;float:left;}
+    #submit_btn:hover {background-color:#d8d8d8;
+        color:#666;text-shadow:1px 1px 1px #fff;}
+    .line {float:left;margin-top:10px;}
+    .pd15 {padding-top:15px!important;}
+    .red {color:red;}
+    #mask{position:absolute;visibility: hidden;
+        top:0;left:0;background:#000;opacity:0.7;z-index:1000;}
+</style>

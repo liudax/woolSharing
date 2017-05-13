@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.shisheng.dao.CommentMapper" >
+
+  <insert id="insert" parameterType="Comment">
+    insert into comment (id, user_id, commodity_id,
+    answer_id, support_num, comment_time,
+    content)
+    values (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{commodityId,jdbcType=VARCHAR},
+    #{answerId,jdbcType=VARCHAR}, #{supportNum,jdbcType=INTEGER}, #{commentTime,jdbcType=TIMESTAMP},
+    #{content,jdbcType=LONGVARCHAR})
+  </insert>
+
+  <select id="getCommentsByCommodityId" resultType="Comment">
+    <include refid="pup"></include>
+     WHERE comment.commodity_id = #{commodityId}
+    ORDER BY comment.comment_time DESC
+  </select>
+
+
+  <select id="getCommentById" resultType="Comment">
+    <include refid="pup"></include>
+    WHERE comment.id = #{id}
+  </select>
+<sql id="pup">
+    SELECT comment.*, user.nickname AS user_name FROM comment
+     LEFT JOIN user on comment.user_id = user.id
+</sql>
+
+  <update id="updateCommentSupportNum">
+    UPDATE comment SET comment.support_num = comment.support_num+1
+    WHERE  comment.id =  #{id}
+  </update>
+
+</mapper>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.shisheng.dao.PlatformMapper" >
+
+  <insert id="addPlatform" parameterType="Platform" >
+    insert into platform (id, platform_name, link, 
+      image_addr, introduce)
+    values (#{id,jdbcType=VARCHAR}, #{platformName,jdbcType=VARCHAR}, #{link,jdbcType=VARCHAR}, 
+      #{imageAddr,jdbcType=VARCHAR}, #{introduce,jdbcType=LONGVARCHAR})
+  </insert>
+
+  <select id="getPlatformList" resultType="Platform">
+    SELECT * FROM  platform
+  </select>
+
+  <select id="getPlatformDetail" resultType="Platform">
+    SELECT * FROM  platform WHERE id =#{id}
+  </select>
+
+</mapper>
