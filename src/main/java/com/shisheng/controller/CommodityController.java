@@ -3,6 +3,7 @@ package com.shisheng.controller;
 import com.shisheng.entity.Commodity;
 import com.shisheng.entity.User;
 import com.shisheng.service.ICommodityService;
+import com.shisheng.util.EntityIDFactory;
 import com.shisheng.util.MyValidation;
 import com.shisheng.util.QueryPojo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -27,10 +29,27 @@ public class CommodityController {
 
     @ResponseBody
     @RequestMapping(value = "/center/ajax/addCommodity",method = RequestMethod.POST)
-    public Boolean addCommodity(Commodity commodity,HttpSession session){
+    public Boolean addCommodity(Commodity newCommodity,HttpSession session){
         User user = (User)session.getAttribute("user");
-        commodity.setUserId(user.getId());
-        return  service.addCommodity(commodity);
+        newCommodity.setUserId(user.getId());
+        newCommodity.setType("用户分享");
+        newCommodity.setId(EntityIDFactory.createId());
+        newCommodity.setShareTime(new Date());
+        return  service.addCommodity(newCommodity);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/center/ajax/deleteCommodity",method = RequestMethod.POST)
+    public Boolean deleteCommodity(@RequestParam("id") String id,HttpSession session){
+        Map<String,Object> cdy = service.getDetail(id);
+        User user = (User)session.getAttribute("user");
+        if(cdy==null){
+            return false;
+        }
+        if(!user.getId().equals(cdy.get("userId"))){
+            return false;
+        }
+        return  service.deleteCommodity(id);
     }
 
     @ResponseBody

@@ -23,11 +23,11 @@
     <div class="left col-1 left-memu">
         <ul>
             <li><a href="/center/info">个人信息</a></li>
-            <li><a href="/center/myMsg">我的投稿</a></li>
             <li class="on"><a href="/center/newMsg">在线投稿</a></li>
+            <li><a href="/center/myMsg">我的投稿</a></li>
             <li><a href="/center/myCollect">我的收藏</a></li>
             <li><a href="/center/myComment">我的评论</a></li>
-            <li><a href="">安全退出</a></li>
+            <li><a href="/login.html">安全退出</a></li>
         </ul>
     </div>
 
@@ -35,37 +35,33 @@
 
     <div class="content_right left" style="margin-bottom: 50px">
         <h3 class="title1">在线投稿</h3>
-<form action="/center/ajax/addCommodity" method="post" ></form>
         <div class="input_div">
             <span>标题:</span>
-            <input class="input_text" name="title" type="text" style="width: 300px;">
+            <input class="input_text" id="title" type="text" style="width: 300px;">
         </div>
         <div class="input_div">
             <span>价格卖点:</span>
-            <input class="input_text" name="title" type="text" style="width: 300px;">
+            <input class="input_text" id="pricePoint" type="text" style="width: 300px;">
         </div>
         <div class="input_div">
             <span>标签:</span>
-            <input class="input_text" name="title" type="text" style="width: 300px;">
+            <input class="input_text" id="label" type="text" style="width: 300px;">
         </div>
         <div class="input_div">
             <span>推荐理由:</span>
-            <textarea style="width: 400px;height: 100px"></textarea>
+            <textarea id="reason" style="width: 400px;height: 100px"></textarea>
         </div>
         <div class="input_div">
             <span>图片:</span>
             <form id="imageForm" enctype="multipart/form-data" style="display: inline-block">
                 <input type="file" id="uploadFile" name="image">
                 <input type="button" onclick="uploadHead()" value="确定">
-                <a href="javascript:;" class="a-upload">
-                    <input type="file" name="" id="">点击这里上传文件
-                </a>
             </form>
-            <input type="hidden" id="imageName">
+            <input type="hidden" id="imageAddr">
         </div>
         <div class="input_div">
             <span>商品链接:</span>
-            <input class="input_text" name="title" type="text" style="width: 300px;">
+            <input class="input_text" id="link" type="text" style="width: 300px;">
         </div>
         <style>
             .input_div select{
@@ -75,23 +71,23 @@
         </style>
         <div class="input_div">
             <span>所属平台:</span>
-            <select id="platform">
+            <select id="platformId">
 
             </select>
         </div>
         <div class="input_div">
             <span>商品类型:</span>
-            <select id="parent_type">
+            <select id="parentTypeId">
 
             </select>
 
-            <select  id="child_type">
+            <select  id="childTypeId">
                 <option value=''>子类型</option>
             </select>
 
 
         </div>
-        <input type="submit" onclick="return true" value="修改" style="margin-left: 160px;width: 60px;height: 30px">
+        <input type="button" onclick="addCommodity()" value="修改" style="margin-left: 160px;width: 60px;height: 30px">
 
     </div>
 

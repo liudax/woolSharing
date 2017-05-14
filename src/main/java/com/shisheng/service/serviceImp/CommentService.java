@@ -13,6 +13,7 @@ import javax.naming.event.ObjectChangeListener;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Magic on 2017/4/24.
@@ -64,5 +65,17 @@ public class CommentService implements ICommentService {
         return "true";
     }
 
+
+    public List<Map<String,Object>> getCommentByUserId(String userId,int offset) {
+        return dao.getCommentByUserId(userId,offset);
+    }
+
+    public Boolean deleteComment(String id, String userId) {
+        Comment comment = dao.getCommentById(id);
+        if(comment!=null && comment.getUserId().equals(userId)){
+            return dao.deleteById(id)==1?true:false;
+        }
+        return false;
+    }
 
 }

@@ -24,6 +24,10 @@
     WHERE a.id =#{id}
   </select>
 
+  <delete id="deleteCommodity">
+    DELETE FROM commodity WHERE id = #{id}
+  </delete>
+
 
   <select id="getDetailedList" resultType="map" parameterType="com.shisheng.util.QueryPojo">
     <include refid="pup"></include>

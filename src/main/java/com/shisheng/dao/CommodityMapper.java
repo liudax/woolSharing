@@ -18,4 +18,6 @@ public interface CommodityMapper {
     //根据id查询商品明细
     Map<String,Object> getCommodityDetail(String id);
 
+    int deleteCommodity(String id);
+
 }

@@ -37,7 +37,6 @@ function isLogin(){
         async:true,
         success:function (result) {
             if(result.success){
-                has = true;
                 $("[name=no_logged]").each(function () {
                     $(this).hide();
                 });
@@ -245,6 +244,26 @@ var format = function(time, format){
                 break;
         }
     })
+}
+
+function collect(that) {
+    var id = $(that).attr("num");
+
+    $.ajax({
+        url:"/ajax/addCollect",
+        data:{commodityId:id},
+        type:"post",
+        success:function (result) {
+            if(result.success){
+                alert("收藏成功");
+            }else {
+                alert(result.message);
+                openLogin();
+            }
+        }
+    })
+
+
 }
 
 

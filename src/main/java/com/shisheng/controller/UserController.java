@@ -132,11 +132,7 @@ public class UserController {
        return service.checkLoginName(loginName);
     }
 
-//
-//    @RequestMapping(value = "/register",method = RequestMethod.GET)
-//    public String checkLoginName(){
-//        return "/user/register";
-//    }
+
 
 
 

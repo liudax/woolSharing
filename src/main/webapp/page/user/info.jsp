@@ -14,8 +14,8 @@
     <div class="left col-1 left-memu">
         <ul>
             <li class="on"><a href="/center/info">个人信息</a></li>
-            <li><a href="/center/myMsg">我的投稿</a></li>
             <li><a href="/center/newMsg">在线投稿</a></li>
+            <li><a href="/center/myMsg">我的投稿</a></li>
             <li><a href="/center/myCollect">我的收藏</a></li>
             <li><a href="/center/myComment">我的评论</a></li>
             <li><a href="/login.html">安全退出</a></li>

@@ -4,6 +4,7 @@ import com.shisheng.entity.Comment;
 import com.shisheng.entity.User;
 import com.shisheng.service.ICommentService;
 import com.shisheng.util.MyResult;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Magic on 2017/4/24.
@@ -58,6 +60,24 @@ public class CommentController {
     public String addNewComment(String id){
         service.support(id);
         return "true";
+    }
+
+
+    @ResponseBody
+    @RequestMapping("/center/ajax/getComment")
+    public List<Map<String,Object>> getMyMsg(HttpSession session, Integer page){
+        User user = (User)session.getAttribute("user");
+
+       /* List<Map<String,Object>> list = */
+
+        return service.getCommentByUserId(user.getId(),(page-1)*10);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/center/ajax/deleteComment",method = RequestMethod.POST)
+    public Boolean deleteComment(HttpSession session,String id){
+        User user = (User)session.getAttribute("user");
+        return service.deleteComment(id,user.getId());
     }
 
 

@@ -9,7 +9,7 @@ public class Commodity {
 
     private String pricePoint;
 
-    private Integer state;
+    private int state;
 
     private String type;
 

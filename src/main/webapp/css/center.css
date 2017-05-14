@@ -21,39 +21,9 @@ a{text-decoration: none;color: #333333;}
 .content_right table{ width: 100%;table-layout: fixed;}
 .content_right thead th{padding-left: 10px; background-color: #F5F5F5;height: 30px;font-weight: normal;font-size: 14px;text-align: left;}
 .content_right tbody td{padding-left: 10px;text-align: left;height: 25px;line-height: 25px;border-bottom: 1px solid #F5F5F5;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;color: #333333;font-size: 12px;font-family: "Microsoft YaHei", "SimSun";}
+tbody a:hover{
+    color: #e63429;
+}
 .page{padding-top: 5px;width: 100%;border-top:1px solid #ccc;position: absolute;top:360px;}
 .page span{}
 .page button{width: 80px;height: 22px;margin-left: 10px;float: right;cursor:pointer}
-
-.a-upload {
-    padding: 4px 10px;
-    height: 20px;
-    line-height: 20px;
-    position: relative;
-    cursor: pointer;
-    color: #888;
-    background: #fafafa;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    overflow: hidden;
-    display: inline-block;
-    *display: inline;
-    *zoom: 1
-}
-
-.a-upload  input {
-    position: absolute;
-    font-size: 100px;
-    right: 0;
-    top: 0;
-    opacity: 0;
-    filter: alpha(opacity=0);
-    cursor: pointer
-}
-
-.a-upload:hover {
-    color: #444;
-    background: #eee;
-    border-color: #ccc;
-    text-decoration: none
-}

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.shisheng.dao.CollectionListMapper" >
+    <insert id="addCollect" parameterType="CollectionList">
+        INSERT ignore  INTO collection_list (commodity_id,user_id,collect_time)
+         VALUES(#{commodityId},#{userId},#{collectTime})
+    </insert>
+
+    <select id="getCollectList" resultType="map">
+        SELECT a.*,b.title FROM collection_list a
+        LEFT JOIN commodity b ON b.id = a.commodity_id
+        WHERE a.user_id = #{id}
+    </select>
+
+    <delete id="deleteCollect">
+        DELETE FROM collection_list
+        WHERE collection_list.user_id=#{userId}
+            AND  collection_list.commodity_id =#{commodityId}
+    </delete>
+
+</mapper>

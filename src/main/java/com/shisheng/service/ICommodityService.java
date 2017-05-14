@@ -3,6 +3,7 @@ package com.shisheng.service;
 import com.shisheng.entity.Commodity;
 import com.shisheng.util.QueryPojo;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 
@@ -17,5 +18,6 @@ public interface ICommodityService {
 
      Map<String,Object> getDetail(String id);
 
+     Boolean deleteCommodity(String id);
 
 }

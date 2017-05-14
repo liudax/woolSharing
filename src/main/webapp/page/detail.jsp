@@ -40,7 +40,7 @@
                 </span>
                 <div class="clear" style="margin-bottom: 10px "></div>
                 <div class="buy">
-                    <a target="_blank" isconvert="1" href="https://detail.ju.taobao.com/home.htm?item_id=527106323629">前往购买 ></a></div>
+                    <a target="_blank" isconvert="1" href="${cdy.link}">前往购买 ></a></div>
                 <div class="shop">
                     <a href="/mall/ju" target="_blank" class="mall">${cdy.platformName}</a>
                     <span class="kankan"></span>
@@ -61,7 +61,7 @@
             <input type="hidden" id="commodityId" value="${cdy.id}">
            <%-- <input type="hidden" name="url" value="">--%>
             <div>
-                <h5><strong>我来说两句</strong><span class="fn rt blue">已有<font color="#FF0000">6</font>条评论</span></h5>
+                <h5><strong>我来说两句</strong><span class="fn rt blue">已有<font color="#FF0000">${commentNumber}</font>条评论</span></h5>
                 <textarea id="content" rows="8" cols="80" name="content"></textarea><br><!--&nbsp;&nbsp;&nbsp;&nbsp;(eyey75307) <a href="" target="_top">退出</a> -->
                 <div class="btn" style="font-size:12px;color: red">
                     <input type="button" onclick="addNewComment()" value="发表评论">

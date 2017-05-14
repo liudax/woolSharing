@@ -27,9 +27,27 @@
      LEFT JOIN user on comment.user_id = user.id
 </sql>
 
+  <delete id="deleteById">
+    DELETE FROM comment WHERE id =#{id}
+  </delete>
+
+  <delete id="deleteByCommodityId">
+    DELETE FROM comment WHERE comment.commodity_id =#{commodityId}
+  </delete>
   <update id="updateCommentSupportNum">
     UPDATE comment SET comment.support_num = comment.support_num+1
     WHERE  comment.id =  #{id}
   </update>
+  
+  <select id="getCommentByUserId" resultType="map">
+    SELECT comment.*, commodity.title AS commodityTitle ,commodity.link AS commodityLink
+    FROM comment
+    LEFT JOIN user on comment.user_id = user.id
+    LEFT JOIN commodity ON  comment.commodity_id = commodity.id
+    WHERE comment.user_id = #{userId}
+    ORDER BY comment.comment_time DESC
+    limit #{offset} , 10
+
+  </select>
 
 </mapper>

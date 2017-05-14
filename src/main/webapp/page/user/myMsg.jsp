@@ -3,9 +3,9 @@
 <html>
 <head>
     <title>会员管理中心</title>
+    <script src="/js/jquery-1.9.1.min.js"></script>
     <link href="/css/user_header.css" type="text/css" rel="stylesheet">
     <link href="/css/center.css" type="text/css" rel="stylesheet">
-    <script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
 </head>
 <body>
 <%@include file="/page/common/user_header.html"%>
@@ -14,11 +14,11 @@
     <div class="left col-1 left-memu">
         <ul>
             <li><a href="/center/info">个人信息</a></li>
-            <li  class="on"><a href="/center/myMsg">我的投稿</a></li>
             <li><a href="/center/newMsg">在线投稿</a></li>
+            <li  class="on"><a href="/center/myMsg">我的投稿</a></li>
             <li><a href="/center/myCollect">我的收藏</a></li>
             <li><a href="/center/myComment">我的评论</a></li>
-            <li><a href="">安全退出</a></li>
+            <li><a href="/login.html">安全退出</a></li>
         </ul>
     </div>
     <!-- 内容部分 -->
@@ -46,17 +46,15 @@
 
 </div>
 <%@include file="/page/common/footer.html"%>
-</body>
 <script type="text/javascript">
+    $(function () {
+        getMyMsg(true)
+    });
     var page = {
         isNext:true,
         hasNext:true,
         index:0
     }
-
-    $(function () {
-        getMyMsg(true);
-    })
     function getMyMsg(flag) {
         page.isNext=flag;
         var pageNum = flag?page.index+1:page.index-1;
@@ -89,12 +87,11 @@
                 break;
             }
             var cdy = result[i];
-            var state = "";
             html+="<tr>"+
-                "<td>"+cdy.title+"</td>"+
-                "<td>"+cdy.platformName+"</td>"+
-                "<td>"+cdy.shareTime+"</td>"+
-                "<td><a href=''>删除</a> </td>"+
+                "<td><a href='/"+cdy.id+"/detail' target='-_blank'>"+cdy.title+"</a></td>"+
+                "<td>"+stateTrans(cdy.state)+"</td>"+
+                "<td>"+format(cdy.shareTime, 'yyyy-MM-dd HH:mm:ss')+"</td>"+
+                "<td><a href='#' num='"+cdy.id+"' onclick='deleteCdy(this);return false'>删除</a> </td>"+
                 "</tr>";
         }
         $("#listBody").append(html);
@@ -102,15 +99,62 @@
         page.index = page.isNext?page.index+1:page.index-1;
         $("#pageNum").text("第"+page.index+"页")
     }
-    
+
+    function deleteCdy(that) {
+        var id = $(that).attr("num");
+        $.ajax({
+            url:"/center/ajax/deleteCommodity",
+            type:"post",
+            data:{id:id},
+            success:function (result) {
+                if(result){
+                    alert("删除成功");
+                    window.location.href="/center/myMsg";
+                }else{
+                    alert("删除失败");
+                }
+            }
+        })
+    }
+
     function stateTrans(num) {
         var state = "";
         switch (num){
-            case 0:state="未审核";break;
-            case 1:state="已通过";break;
-            case 0:state="已过期";break;
+            case 1:state="通过";break;
+            case 2:state="通过";break;
+            case 3:state="过期";break;
+            default: state="未审核";
         }
+        return state;
+    }
+    var format = function(time, format){
+        var t = new Date(time);
+        var tf = function(i){return (i < 10 ? '0' : '') + i};
+        return format.replace(/yyyy|MM|dd|HH|mm|ss/g, function(a){
+            switch(a){
+                case 'yyyy':
+                    return tf(t.getFullYear());
+                    break;
+                case 'MM':
+                    return tf(t.getMonth() + 1);
+                    break;
+                case 'mm':
+                    return tf(t.getMinutes());
+                    break;
+                case 'dd':
+                    return tf(t.getDate());
+                    break;
+                case 'HH':
+                    return tf(t.getHours());
+                    break;
+                case 'ss':
+                    return tf(t.getSeconds());
+                    break;
+            }
+        })
     }
 
+
 </script>
+</body>
 </html>

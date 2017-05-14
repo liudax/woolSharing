@@ -64,8 +64,9 @@
                             </c:forTokens>
         </span>
                             <span class='fr buy'>
-          <a href="/mall/${cdy.platformId}" target='_blank' class='mall'>${cdy.platformName}</a>
-              <a target='_blank' isconvert='1' href='${cdy.link}' rel='nofollow'>直达链接 ></a>
+                                <a class="mall" href="#" num="${cdy.id}" onclick="collect(this);return false">收藏</a>
+                <a href="/mall/${cdy.platformId}" target='_blank' class='mall'>${cdy.platformName}</a>
+                <a target='_blank' isconvert='1' href='${cdy.link}' rel='nofollow'>直达链接 ></a>
         </span>
                         </dd>
                         </dd>

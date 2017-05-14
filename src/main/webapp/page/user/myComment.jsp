@@ -11,6 +11,7 @@
 <html>
 <head>
     <title>会员管理中心</title>
+    <script src="/js/jquery-1.9.1.min.js"></script>
     <link href="/css/user_header.css" type="text/css" rel="stylesheet">
     <link href="/css/center.css" type="text/css" rel="stylesheet">
 </head>
@@ -21,104 +22,134 @@
     <div class="left col-1 left-memu">
         <ul>
             <li><a href="/center/info">个人信息</a></li>
-            <li><a href="/center/myMsg">我的投稿</a></li>
             <li><a href="/center/newMsg">在线投稿</a></li>
+            <li><a href="/center/myMsg">我的投稿</a></li>
             <li><a href="/center/myCollect">我的收藏</a></li>
             <li class="on"><a href="/center/myComment">我的评论</a></li>
-            <li><a href="">安全退出</a></li>
+            <li><a href="/login.html">安全退出</a></li>
         </ul>
     </div>
-    <style>
-        /*.content_right table{ width: 100%;table-layout: fixed;}
-        .content_right thead th{padding-left: 10px; background-color: #F5F5F5;height: 30px;font-weight: normal;font-size: 14px;text-align: left;}
-        .content_right tbody td{padding-left: 10px;text-align: left;height: 25px;line-height: 25px;border-bottom: 1px solid #F5F5F5;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;color: #333333;font-size: 12px;font-family: "Microsoft YaHei", "SimSun";}
-        .page{padding-top: 5px;width: 100%;border-top:1px solid #ccc;position: absolute;top:360px;}
-        .page span{}
-        .page button{width: 80px;height: 22px;margin-left: 10px;float: right }*/
-    </style>
-    <!-- 内容部分 -->
     <div class="content_right left" style="position: relative">
         <h3 class="title1">我的评论</h3>
         <table cellspacing="0" style="width: 100%">
             <thead>
             <tr>
                 <th>标题</th>
-
                 <th width="200px">发布时间</th>
                 <th width="50PX">操作</th>
             </tr>
             </thead>
-            <tbody style="text-align: center">
-            <tr>
-                <td><a href="#">补券+降价！Peacock孔雀AMW-55双层真空不锈钢保温杯550ml</a></td>
+            <tbody id="listBody" style="text-align: center">
 
-                <td>2016-08-01 19:12；00</td>
-                <td><a href="#">删除</a> </td>
-            </tr>
-            <tr>
-                <td>aaaaasdasd德紧迫啊uds</td>
-
-                <td>2016-08-01 19:12；00</td>
-                <td><a href="#">删除</a> </td>
-            </tr>
-            <tr>
-                <td>aaaaasdasd德紧迫啊uds</td>
-
-                <td>2016-08-01 19:12；00</td>
-                <td><a href="#">删除</a> </td>
-            </tr>
-            <tr>
-                <td>aaaaasdasd德紧迫啊uds</td>
-
-                <td>2016-08-01 19:12；00</td>
-                <td><a href="#">删除</a> </td>
-            </tr>
-            <tr>
-                <td>aaaaasdasd德紧迫啊uds</td>
-
-                <td>2016-08-01 19:12；00</td>
-                <td><a href="#">删除</a> </td>
-            </tr>
-            <tr>
-                <td>aaaaasdasd德紧迫啊uds</td>
-
-                <td>2016-08-01 19:12；00</td>
-                <td><a href="#">删除</a> </td>
-            </tr>
-            <tr>
-                <td>aaaaasdasd德紧迫啊uds</td>
-
-                <td>2016-08-01 19:12；00</td>
-                <td><a href="#">删除</a> </td>
-            </tr>
-            <tr>
-                <td>aaaaasdasd德紧迫啊uds</td>
-
-                <td>2016-08-01 19:12；00</td>
-                <td><a href="#">删除</a> </td>
-            </tr>
-            <tr>
-                <td>aaaaasdasd德紧迫啊uds</td>
-
-                <td>2016-08-01 19:12；00</td>
-                <td><a href="#">删除</a> </td>
-            </tr>
-            <tr>
-                <td>aaaaasdasd德紧迫啊uds</td>
-
-                <td>2016-08-01 19:12；00</td>
-                <td><a href="#">删除</a> </td>
-            </tr>
             </tbody>
         </table>
         <div class="page">
-            <span>第3页</span>
-            <button>上一页</button>
-            <button>下一页</button>
+            <span id="pageNum">第1页</span>
+            <button id="next" onclick="getMyMsg(true)">下一页</button>
+            <button id="pre" onclick="getMyMsg(false)">上一页</button>
         </div>
     </div>
 
 </div>
 <%@include file="/page/common/footer.html"%>
 </body>
+<script type="text/javascript">
+
+    $(function () {
+        getMyMsg(true);
+    })
+    var page = {
+        isNext:true,
+        hasNext:true,
+        index:0
+    }
+
+    function getMyMsg(flag) {
+        page.isNext=flag;
+        var pageNum = flag?page.index+1:page.index-1;
+        console.log(pageNum + " " + flag);
+        $.ajax({
+            url:"/center/ajax/getComment",
+            data:{page:pageNum},
+            success:function (result) {
+                if(result==null || result.length==0){
+                    //alert("没有更多数据了");
+                    page.hasNext =false;
+                }else{
+                    loadDate(result);
+                }
+                var preShow = page.index<=1?"hidden":"visible";
+                var nextShow = page.hasNext?"visible":"hidden";
+                $("#pre").css("visibility",preShow);
+                $("#next").css("visibility",nextShow);
+            }
+        })
+    }
+    function loadDate(result) {
+        $("#listBody").empty();
+        var html = "";
+        if(result.length<10){
+            page.hasNext =false;
+        }
+        for(var i=0;i<result.length;i++){
+            if(i==10){
+                break;
+            }
+            var com = result[i];
+            html+="<tr>"+
+                "<td><a href='/"+com.commodity_id+"/detail' target='-_blank'>"+com.commodityTitle+"</a></td>"+
+                "<td>"+format(com.comment_time, 'yyyy-MM-dd HH:mm:ss')+"</td>"+
+                "<td><a href='#' num='"+com.id+"' onclick='deleteCmm(this);return false'>删除</a> </td>"+
+                "</tr>";
+        }
+        $("#listBody").append(html);
+        if(page.isNext==false) page.hasNext=true;
+        page.index = page.isNext?page.index+1:page.index-1;
+        $("#pageNum").text("第"+page.index+"页")
+    }
+
+    function deleteCmm(that) {
+        var id = $(that).attr("num");
+        $.ajax({
+            url:"/center/ajax/deleteComment",
+            type:"post",
+            data:{id:id},
+            success:function (result) {
+                if(result){
+                    alert("删除成功");
+                    window.location.href="/center/myComment";
+                }else{
+                    alert("删除失败");
+                }
+            }
+        })
+    }
+
+    var format = function(time, format){
+        var t = new Date(time);
+        var tf = function(i){return (i < 10 ? '0' : '') + i};
+        return format.replace(/yyyy|MM|dd|HH|mm|ss/g, function(a){
+            switch(a){
+                case 'yyyy':
+                    return tf(t.getFullYear());
+                    break;
+                case 'MM':
+                    return tf(t.getMonth() + 1);
+                    break;
+                case 'mm':
+                    return tf(t.getMinutes());
+                    break;
+                case 'dd':
+                    return tf(t.getDate());
+                    break;
+                case 'HH':
+                    return tf(t.getHours());
+                    break;
+                case 'ss':
+                    return tf(t.getSeconds());
+                    break;
+            }
+        })
+    }
+</script>
 </html>
