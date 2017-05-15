@@ -12,8 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
-
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -132,7 +130,7 @@ public class PageController {
      * @return
      */
     @RequestMapping(value = "/{id}/detail",method = RequestMethod.GET)
-    public String cdyDetail(@PathVariable("id") String id ,Model model){
+    public String cdyDetail(@PathVariable("id") String id , Model model){
         model.addAttribute("cdy",commodityService.getDetail(id));
 
         return "detail";

@@ -1,0 +1,34 @@
+[
+  {"id":"1",
+    "name":"主菜单",
+    "parentId":"0",
+    "url":"",
+    "icon":"",
+    "order":"1",
+    "isHeader":"1",
+    "childMenus":[
+            {"id":"3",
+              "name":"人员管理",
+              "parentId":"1",
+              "url":"",
+              "icon":"&#xe604;",
+              "order":"1",
+              "isHeader":"0",
+              "childMenus":[
+                  {"id":"4","name":"人员表","parentId":"3","url":"page/simple_account.html","icon":"","order":"1","isHeader":"0","childMenus":""}
+                ]},
+            {"id":"5",
+            "name":"优惠信息管理",
+            "parentId":"1",
+            "url":"",
+            "icon":"&#xe602;",
+            "order":"1",
+            "isHeader":"0",
+            "childMenus":[
+                    {"id":"6","name":"分类管理","parentId":"6","url":"page/home.html","icon":"","order":"1","isHeader":"0","childMenus":""},
+                    {"id":"7","name":"商家管理","parentId":"6","url":"page/home.html","icon":"","order":"1","isHeader":"0","childMenus":""},
+                    {"id":"8","name":"信息管理","parentId":"6","url":"page/home.html","icon":"","order":"1","isHeader":"0","childMenus":""}
+            ]}
+    ]
+  }
+]

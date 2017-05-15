@@ -1,5 +1,6 @@
-package com.shisheng.util;
+package com.shisheng.filter;
 
+import com.shisheng.entity.User;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -10,23 +11,22 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 /**
- * Created by Magic on 2017/5/7.
+ * Created by Magic on 2017/5/15.
  */
-public class SessionFilter extends OncePerRequestFilter {
+public class AdminFilter extends OncePerRequestFilter {
+
+
     protected void doFilterInternal(HttpServletRequest request,
-                                    HttpServletResponse response,
-                                    FilterChain filterChain) throws ServletException, IOException {
+                                    HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
+        User user = (User)request.getSession().getAttribute("editor");
+        if (null == user || user.getProperty()<1) {
 
-        Object obj = request.getSession().getAttribute("user");
-        if (null == obj) {
-            // 如果session中不存在登录者实体，则弹出框提示重新登录
-            // 设置request和response的字符集，防止乱码
             request.setCharacterEncoding("utf-8");
             response.setCharacterEncoding("utf-8");
             response.setContentType("text/html;charset=utf-8");
             PrintWriter out = response.getWriter();
-            String loginPage = "/login.html";
+            String loginPage = "/admin/login.html";
             StringBuilder builder = new StringBuilder();
             builder.append("<script type=\"text/javascript\" charset='utf-8'>");
             builder.append("alert('网页过期，请重新登录！');");

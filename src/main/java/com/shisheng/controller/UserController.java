@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by Magic on 2017/4/15.
@@ -23,17 +24,68 @@ public class UserController {
     @Resource(name="userService")
     IUserService service;
 
-    /*
-    @RequestMapping("/center/info")
-    public String info(){
-        return "user/info";
+
+    @ResponseBody
+    @RequestMapping(value = "/admin/ajax/addUser",
+            produces = "application/json;charset=utf-8",
+            method = RequestMethod.POST)
+    public MyBoolean addUser(User user){
+
+
+        return  service.register(user);
     }
 
-    @RequestMapping("/center/change_info")
-    public String change_info(){return "user/change_info";}
+    @ResponseBody
+    @RequestMapping(value = "/admin/ajax/userList",produces = "application/json;charset=utf-8")
+    public List<User> userList(HttpSession session){
+        User user =(User)session.getAttribute("editor");
+        if(user.getProperty()==2){
+            return service.getUserByCondition(null,null);
+        }else {
+            return service.getUserByCondition(null,0);
+        }
 
-    @RequestMapping("/center/change_password")
-    public String change_password(){return "user/change_password";}*/
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/admin/ajax/changeState",produces = "application/json;charset=utf-8")
+    public Boolean changeState(Integer state,String id){
+
+        return  service.updateState(id,state);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/admin/ajax/changeProperty",produces = "application/json;charset=utf-8")
+    public Boolean changeProperty(Integer property,String id,HttpSession session){
+        User user =(User)session.getAttribute("editor");
+        if(user.getProperty()==2){
+            return service.updateProperty(id,property);
+        }else {
+            return false;
+        }
+    }
+
+
+
+    @ResponseBody
+    @RequestMapping(value = "/user/adminLogin",
+            produces = "application/json;charset=utf-8",
+            method = RequestMethod.POST)
+    public MyResult<User> adminLogin(@RequestParam("loginName")String loginName,
+                                @RequestParam("password")String password,
+                                HttpSession session){
+        return service.adminLogin(loginName,password,session);
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value = "/admin/ajax/getAdmin",
+            produces = "application/json;charset=utf-8")
+    public User adminLogin(HttpSession session){
+        return (User)session.getAttribute("editor");
+    }
+
+
 
     @RequestMapping("/center/{page}")
     public String userPage(@PathVariable("page") String page){
@@ -43,13 +95,6 @@ public class UserController {
     }
 
 
-   /* @RequestMapping(value = "/center/updatePassword",method = RequestMethod.POST)
-    public String updatePassword(User user){
-
-
-        return "redirect:/center/info";
-    }
-    */
 
     @RequestMapping(value = "/center/ajax/updateUser",method = RequestMethod.POST)
     public String updateUser(User user,HttpSession session){
@@ -77,17 +122,13 @@ public class UserController {
                                 //@RequestParam("code")String code,
                                 HttpServletRequest request){
         HttpSession session = request.getSession(true);
-        /*String randomString = (String)session.getAttribute("randomString");
-        if(!randomString.toUpperCase().equals(code)){
-            return new MyResult<User>(false,"验证码错误");
-        }*/
         if(!MyValidation.isValid(loginName)){
             return new MyResult<User>(false,"用户名为空");
         }
         if(!MyValidation.isValid(password)){
             return new MyResult<User>(false,"密码为空");
         }
-        return service.login(loginName,password,request);
+        return service.login(loginName,password,session);
     }
 
     @ResponseBody

@@ -1,0 +1,257 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+	<meta name="renderer" content="webkit|ie-comp|ie-stand">
+	<meta name="keywords" content="scclui框架">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta http-equiv="Cache-Control" content="no-siteapp" />
+	  <link rel="stylesheet" href="../common/css/bootstrap.css">
+	  <link rel="stylesheet" href="../common/css/bootstrap-table.css">
+	  <script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+	  <script type="text/javascript" src="../common/js/bootstrap.min.js"></script>
+	  <script type="text/javascript" src="../common/js/bootstrap-table.min.js"></script>
+	  <script type="text/javascript" src="../common/js/bootstrap-table-zh-CN.min.js"></script>
+	  <title>人员管理</title>
+    <style>
+		body{
+			padding: 20px;
+		}
+	</style>
+  </head>
+
+  <body>
+  <div id="toolbar" class="btn-group">
+	  <button id="btn_add" type="button" class="btn btn-default" data-toggle="modal" data-target="#newUserModel">
+		  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
+	  </button>
+
+	  <button id="btn_qy" type="button" class="btn btn-default" onclick="changeState(0)">
+		  <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>启用
+	  </button>
+	  <button id="btn_jy" type="button" class="btn btn-default" onclick="changeState(1)">
+		  <span class="glyphicon glyphicon-off" aria-hidden="true"></span>禁用
+	  </button>
+	  <button id="btn_rm" type="button" class="btn btn-default" onclick="changeProperty(1)" style="display: none">
+		  <span class="glyphicon glyphicon-hand-up" aria-hidden="true"></span>设置为管理员
+	  </button>
+	  <button id="btn_qx" type="button" class="btn btn-default" onclick="changeProperty(0)" style="display: none">
+		  <span class="glyphicon glyphicon-hand-up" aria-hidden="true"></span>取消管理员
+	  </button>
+  </div>
+  <div class="container" style="width: 100%">
+	  <table id="myTable">
+		  <thead>
+		  <tr>
+			  <th data-radio="true"></th>
+			  <th data-field="id">id</th>
+			  <th data-field="loginName">用户名</th>
+			 <!-- <th data-field="password">登陆密码</th>-->
+			  <th data-field="registerTime" data-formatter="timeFormat">注册时间</th>
+			  <th data-field="state" data-formatter="stateFormat">状态</th>
+			  <th data-field="nickname">昵称</th>
+			  <th data-field="property" data-formatter="propertyFormat">权限</th>
+			  <th data-field="sex" data-formatter="sexFormat">性别</th>
+			  <th data-field="age">年龄</th>
+			  <th data-field="email">邮箱</th>
+			  <th data-field="phone">电话</th>
+
+			 <!-- <th data-field="id" data-formatter="stateFormat" data-events="actionEvents">操作</th>-->
+
+		  </tr>
+		  </thead>
+
+	  </table>
+  </div>
+
+  <div class="modal fade" id="newUserModel" tabindex="-1" role="dialog" aria-labelledby="newUserModelLabel">
+	  <div class="modal-dialog" role="document">
+		  <div class="modal-content">
+			  <div class="modal-header">
+				  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					  <span aria-hidden="true">×</span>
+				  </button>
+				  <h4 class="modal-title" id="newUserModelLabel">新增账户</h4>
+			  </div>
+			  <div class="modal-body">
+				  <form class="form-horizontal" role="form">
+					  <div class="form-group">
+						  <label class="col-sm-2 control-label">用户名</label>
+						  <div class="col-sm-7">
+							  <input type="text" class="form-control" id="loginName"  placeholder="请输入用户名">
+						  </div>
+					  </div>
+					  <div class="form-group">
+						  <label  class="col-sm-2 control-label">昵称</label>
+						  <div class="col-sm-7">
+							  <input type="text" class="form-control" id="nickname" placeholder="请输入昵称">
+						  </div>
+					  </div>
+					  <div class="form-group">
+						  <label  class="col-sm-2 control-label"></label>
+						  <div class="col-sm-7">
+							  <p>初始密码为123456</p>
+						  </div>
+					  </div>
+				  </form>
+			  </div>
+			  <div class="modal-footer">
+				  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				  <button type="button" class="btn btn-primary" onclick="addUser()">Save</button>
+			  </div>
+		  </div>
+	  </div>
+  </div>
+  </body>
+<script>
+	var property = 1;
+	function checkProperty() {
+        $.ajax({url:"/admin/ajax/getAdmin",success:function (editor) {
+            console.log(1);
+               if(editor.property==2){
+                   property=2;
+                   $("#btn_rm").css({"display":"block"});
+                   $("#btn_qx").css({"display":"block"});
+			   }
+            }
+	})
+    }
+	$(function () {
+        checkProperty();
+		init();
+    });
+	function init() {
+        $('#myTable').bootstrapTable({
+            url: '/admin/ajax/userList',         //请求后台的URL（*）
+            method: 'get',                      //请求方式（*）
+            toolbar: '#toolbar',                //工具按钮用哪个容器
+            striped: true,                      //是否显示行间隔色
+            cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+            pagination: true,                   //是否显示分页（*）
+            sortable: false,                     //是否启用排序
+            sortOrder: "asc",                   //排序方式
+            //queryParams: oTableInit.queryParams,//传递参数（*）
+            //sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+            //pageNumber: 1,                       //初始化加载第一页，默认第一页
+            pageSize: 5,                       //每页的记录行数（*）
+            pageList: [5, 8, 10, 12],        //可供选择的每页的行数（*）
+            search: true,                       //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
+            strictSearch: false,
+            showColumns: true,                  //是否显示所有的列
+            showRefresh: true,                  //是否显示刷新按钮
+            minimumCountColumns: 2,             //最少允许的列数
+            clickToSelect: true,                //是否启用点击选中行
+            //height: 450,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+            uniqueId: "ID",                     //每一行的唯一标识，一般为主键列
+            showToggle: true,                    //是否显示详细视图和列表视图的切换按钮
+            cardView: false,                    //是否显示详细视图
+            detailView: false              //是否显示父子表
+        });
+        $('#myTable').bootstrapTable("hideColumn","id");
+        $('#myTable').bootstrapTable("hideColumn","age");
+        $('#myTable').bootstrapTable("hideColumn","sex");
+        if(property!=2){
+            $('#myTable').bootstrapTable("hideColumn","property");
+		}
+
+
+
+    }
+    function propertyFormat(value, row, index) {
+        return value==2?"超级管理员":value==1?"管理员":"普通用户";
+    }
+
+   	function stateFormat(value, row, index) {
+	   return value==1?"<span style='color: red'>禁用</span>":"启用";
+   	}
+    function sexFormat(value, row, index) {
+	    return value==1?"女":value==0?"男":"-";
+    }
+    function timeFormat(value, row, index){
+	    var format ='yyyy-MM-dd HH:mm:ss';
+        var t = new Date(value);
+        var tf = function(i){return (i < 10 ? '0' : '') + i};
+        return format.replace(/yyyy|MM|dd|HH|mm|ss/g, function(a){
+            switch(a){
+                case 'yyyy':return tf(t.getFullYear());break;
+                case 'MM': return tf(t.getMonth() + 1);break;
+                case 'mm':return tf(t.getMinutes());break;
+                case 'dd':return tf(t.getDate());break;
+                case 'HH':return tf(t.getHours());break;
+                case 'ss':return tf(t.getSeconds());break;
+            }
+        })
+    }
+    function addUser() {
+        var loginName= $("#loginName").val();
+        var nickname= $("#nickname").val();
+		if(loginName!=null&& loginName.trim()!=""){
+            $.ajax({
+                url:"/admin/ajax/addUser",
+                type:'post',
+                data:{loginName:loginName,nickname:nickname},
+                success:function (result) {
+                    if(result.success){
+                        $("#newUserModel").modal('hide');
+                        $('#myTable').bootstrapTable("refresh");
+					}else{
+                        alert(result.message);
+					}
+                }
+            });
+		}else{
+		    alert("账户为空");
+		}
+    }
+   	function changeState(newState) {
+        var msg = newState!=1?"该用户已启用":"该用户已禁用";
+        var rows= $('#myTable').bootstrapTable("getSelections");
+        if(rows.length==0){
+            alert("请选择");
+           return;
+        }
+        var row = rows[0];
+        //console.log(newState==row.state);
+        if(newState==row.state){
+			alert(msg);
+		}else{
+            $.ajax({
+                url:"/admin/ajax/changeState",
+                type:'post',
+                data:{id:row.id,state:newState},
+				success:function () {
+                    $('#myTable').bootstrapTable("refresh");
+                }
+            });
+		}
+   	}
+    function changeProperty(newProperty) {
+        var msg = newProperty==1?"该用户已是管理员":"该用户为普通用户";
+        var rows= $('#myTable').bootstrapTable("getSelections");
+        if(rows.length==0){
+            alert("请选择");
+            return;
+        }
+        var row = rows[0];
+        //console.log(newState==row.state);
+        if(newProperty==row.property){
+            alert(msg);
+        }else{
+            $.ajax({
+                url:"/admin/ajax/changeProperty",
+                type:'post',
+                data:{id:row.id,property:newProperty},
+                success:function (result) {
+                    if(result){
+                        $('#myTable').bootstrapTable("refresh");
+					}else{
+                        alert("非法请求");
+					}
+
+                }
+            });
+        }
+    }
+</script>
+</html>

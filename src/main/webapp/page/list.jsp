@@ -64,7 +64,7 @@
                             </c:forTokens>
         </span>
                             <span class='fr buy'>
-                                <a class="mall" href="#" num="${cdy.id}" onclick="collect(this);return false">收藏</a>
+                                <a class="" href="#" num="${cdy.id}" onclick="collect(this);return false">收藏</a>
                 <a href="/mall/${cdy.platformId}" target='_blank' class='mall'>${cdy.platformName}</a>
                 <a target='_blank' isconvert='1' href='${cdy.link}' rel='nofollow'>直达链接 ></a>
         </span>
@@ -75,7 +75,7 @@
             </c:forEach>
         </div>
         <div class="content-footer">
-            <img id="loading" src="/images/loading1.gif" height="80" width="80">
+            <img style="display: none" id="loading" src="/images/loading1.gif" height="80" width="80">
             <p id="noMore" style="display: none">已经没有更多内容了!</p>
         </div>
         <style>

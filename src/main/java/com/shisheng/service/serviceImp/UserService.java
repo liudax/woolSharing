@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Magic on 2017/4/15.
@@ -42,6 +44,11 @@ public class UserService implements IUserService {
         }
     }
 
+    public List<User> getUserByCondition(Integer state, Integer property) {
+
+        return dao.getUserByCondition(state,property);
+    }
+
 
     /**
      * 登陆验证
@@ -49,17 +56,27 @@ public class UserService implements IUserService {
      * @param password
      * @return
      */
-    public MyResult<User> login(String userName, String password , HttpServletRequest request) {
+    public MyResult<User> login(String userName, String password , HttpSession session) {
 
         User user = dao.getUserByUserName(userName);
-        if(user!=null && user.getPassword().equals(password)){
-            request.getSession().setAttribute("user" , user);
+        if(user!=null && user.getPassword().equals(password) && user.getState()!=1){
+            session.setAttribute("user" , user);
             return new MyResult<User>(true,user);
         }else{
             return new MyResult<User>(false,"密码错误");
         }
 
 
+    }
+
+    public MyResult<User> adminLogin(String userName, String password, HttpSession session) {
+        User user = dao.getUserByUserName(userName);
+        if(user!=null && user.getPassword().equals(password) && user.getProperty()>0 && user.getState()!=1){
+            session.setAttribute("editor" , user);
+            return new MyResult<User>(true,user);
+        }else{
+            return new MyResult<User>(false,"密码错误");
+        }
     }
 
     public Boolean checkLoginName(String loginName) {
@@ -81,5 +98,15 @@ public class UserService implements IUserService {
         }else{
             return new MyBoolean(false,"原密码错误");
         }
+    }
+
+    public Boolean updateState(String id, int state) {
+        dao.updateState(id,state);
+        return true;
+    }
+
+    public Boolean updateProperty(String id, int state) {
+        dao.updateProperty(id,state);
+        return true;
     }
 }

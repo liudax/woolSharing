@@ -20,11 +20,29 @@
   
   <filter>
     <filter-name>sessionFilter</filter-name>
-    <filter-class>com.shisheng.util.SessionFilter</filter-class>
+    <filter-class>com.shisheng.filter.SessionFilter</filter-class>
   </filter>
   <filter-mapping>
     <filter-name>sessionFilter</filter-name>
     <url-pattern>/center/*</url-pattern>
+  </filter-mapping>
+
+
+  <filter>
+    <filter-name>adminFilter</filter-name>
+    <filter-class>com.shisheng.filter.AdminFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>adminFilter</filter-name>
+    <url-pattern>/admin/index.html</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>adminFilter</filter-name>
+    <url-pattern>/admin/page/*</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>adminFilter</filter-name>
+    <url-pattern>/admin/ajax/*</url-pattern>
   </filter-mapping>
 
   <filter>

@@ -42,7 +42,7 @@
       AND  (t1.id = #{typeId} OR  t2.id = #{typeId})
     </if>
     <if test="null!=search and ''!=search">
-      AND (a.title LIKE '%${search}%' OR  a.label LIKE '%$(search)%')
+      AND (a.title LIKE '%${search}%' OR  a.label LIKE '%${search}%')
     </if>
     <if test="null!=shareType and ''!=shareType">
       AND a.type = #{shareType}

@@ -11,6 +11,18 @@
   </insert>
 
 
+    <select id="getUserByCondition" resultType="User">
+        SELECT * FROM user WHERE 1=1
+        <if test="state!=null">
+            AND user.state = #{state}
+        </if>
+        <if test="property!=null">
+            AND user.property = #{property}
+        </if>
+        ORDER BY register_time DESC
+    </select>
+
+
   <select id="getUserByUserName" resultType="User">
     SELECT  * FROM  user WHERE login_name = #{loginName}
   </select>
@@ -28,6 +40,16 @@
     <update id="updatePassword">
         UPDATE user set user.password = #{password}
         WHERE user.login_name = #{loginName}
+    </update>
+
+    <update id="updateState">
+        UPDATE user set user.state = #{state}
+        WHERE user.id = #{id}
+    </update>
+
+    <update id="updateProperty">
+        UPDATE user set user.property = #{property}
+        WHERE user.id = #{id}
     </update>
 
 </mapper>
