@@ -6,6 +6,29 @@
     </select>
 
     <insert id="addParentType">
-
+        INSERT ignore INTO parent_commodity_type(id,type_name)
+        VALUES (#{id},#{typeName})
     </insert>
+
+    <update id="updateParentTypeName">
+        UPDATE parent_commodity_type
+        set type_name = #{newTypeName}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteParentType">
+        DELETE FROM parent_commodity_type
+        WHERE id = #{id}
+    </delete>
+
+    <select id="getParentList" resultType="map">
+        SELECT
+        p.id,
+        p.type_name AS typeName,
+        COUNT(c.id) AS childNum
+         FROM parent_commodity_type p
+        LEFT JOIN child_commodity_type c ON p.id = c.parent_id
+        GROUP BY p.id,p.type_name
+        ORDER BY childNum DESC
+    </select>
 </mapper>

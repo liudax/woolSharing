@@ -8,6 +8,10 @@ public interface PlatformMapper {
 
     int addPlatform(Platform platform);
 
+    int updatePlatform(Platform platform);
+
+    int deletePlatformById(String id);
+
     List<Platform> getPlatformList();
 
     Platform getPlatformDetail(String id);

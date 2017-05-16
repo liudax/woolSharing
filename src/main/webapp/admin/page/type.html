@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <title>分类管理</title>
+    <link rel="stylesheet" href="../common/css/bootstrap.css">
+    <link rel="stylesheet" href="../common/css/bootstrap-table.css">
+    <script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="../common/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../common/js/bootstrap-table.min.js"></script>
+    <script type="text/javascript" src="../common/js/bootstrap-table-zh-CN.min.js"></script>
+</head>
+<body>
+<div id="typeToolbar" class="btn-group">
+    <button  type="button" class="btn btn-default" data-toggle="modal" data-target="#addModel">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
+    </button>
+    <button  type="button" class="btn btn-default" data-toggle="modal" onclick="showEditModel()">
+        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>修改
+    </button>
+    <button  type="button" class="btn btn-default" data-toggle="modal" onclick="removeType()">
+        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
+    </button>
+</div>
+<div class="container" style="width: 100%;padding: 20px">
+    <table id="typeTable">
+        <thead>
+        <tr>
+            <th data-radio="true"></th>
+            <th data-field="id">ID</th>
+            <th data-field="typeName">名称</th>
+            <th data-field="childNum">包含子类型</th>
+        </tr>
+        </thead>
+    </table>
+</div>
+
+<!--子类型表格model -->
+<div class="modal fade" id="typeModel" tabindex="-1" role="dialog" aria-labelledby="typeModelLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="typeModelLabel">
+                    <span></span>
+                    <button  type="button" class="btn btn-default" data-toggle="modal" data-target="#addModel">
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
+                    </button>
+                    <button  type="button" class="btn btn-default" data-toggle="modal" onclick="showEditModel()">
+                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>修改
+                    </button>
+                    <button  type="button" class="btn btn-default" data-toggle="modal" onclick="removeType()">
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
+                    </button>
+                </h4>
+            </div>
+            <div class="modal-body">
+                <table id="childTypeTable">
+                    <thead>
+                    <tr>
+                        <th data-radio="true"></th>
+                        <th data-field="id">ID</th>
+                        <th data-field="typeName">名称</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--新增类型model -->
+<div class="modal fade" id="addModel" tabindex="-1" role="dialog" aria-labelledby="#addModelLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="addModelLabel">添加类型</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">类型id</label>
+                        <div class="col-sm-7">
+                            <input type="text" class="form-control" id="typeId"  placeholder="通常为汉语拼音，且不能与其他重复">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="col-sm-2 control-label">名称</label>
+                        <div class="col-sm-7">
+                            <input type="text" class="form-control" id="typeName" placeholder="请输入名称">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" onclick="addType()">提交</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--修改名称model -->
+<div class="modal fade" id="editModel" tabindex="-1" role="dialog" aria-labelledby="#editModelLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="editModelLabel">修改名称</h4>
+            </div>
+            <div class="modal-body">
+
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">ID</label>
+                        <div class="col-sm-7">
+                            <p class="form-control-static" id="editId"></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">名称</label>
+                        <div class="col-sm-7">
+                            <input type="text" id="newTypeName" class="form-control"  placeholder="请输入名称">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" onclick="editType()">修改</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../common/js/type.js"></script>
+</body>
+</html>

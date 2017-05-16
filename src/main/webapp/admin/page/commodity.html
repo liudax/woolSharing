@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <title>信息管理</title>
+    <link rel="stylesheet" href="../common/css/bootstrap.css">
+    <link rel="stylesheet" href="../common/css/bootstrap-table.css">
+    <script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="/js/jquery-form.js"></script>
+    <script type="text/javascript" src="../common/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../common/js/bootstrap-table.min.js"></script>
+    <script type="text/javascript" src="../common/js/bootstrap-table-zh-CN.min.js"></script>
+</head>
+<body>
+<div id="commodityToolbar">
+    <div class="btn-group">
+        <button  type="button" class="btn btn-default" data-toggle="modal" data-target="#addCdyModel">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
+        </button>
+        <button  type="button" class="btn btn-default" onclick="">
+            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查看
+        </button>
+        <button  type="button" class="btn btn-default" data-toggle="modal" onclick="deleteCommodity()">
+            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
+        </button>
+    </div>
+    <div class="btn-group" style="margin-left: 30px">
+        <button  type="button" class="btn btn-default" onclick="changeState(1)">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>通过
+        </button>
+        <button  type="button" class="btn btn-default" onclick="changeState(4)">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>不通过
+        </button>
+        <button  type="button" class="btn btn-default" onclick="changeState(2)">
+            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>推荐
+        </button>
+        <button  type="button" class="btn btn-default" onclick="changeState(3)">
+            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>过期标注
+        </button>
+    </div>
+    <label style="margin-left: 60px">状态</label>
+    <div class="btn-group">
+        <button type="button" class="btn btn-default dropdown-toggle"
+                data-toggle="dropdown" id="qureyState" sState =-1>
+            所有<span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+            <li><a sState =-1 href="#" onclick="selectState(this);return false">所有</a></li>
+            <li><a sState = 0 href="#" onclick="selectState(this);return false">未审核</a></li>
+            <li><a sState = 1 href="#" onclick="selectState(this);return false">通过</a></li>
+            <li><a sState = 2 href="#" onclick="selectState(this);return false">推荐</a></li>
+            <li><a sState = 3 href="#" onclick="selectState(this);return false">已过期</a></li>
+            <li><a sState = 4 href="#" onclick="selectState(this);return false">未通过</a></li>
+        </ul>
+    </div>
+</div>
+<script>
+
+
+</script>
+<div class="container" style="width: 100%;padding: 20px">
+    <table id="commodityTable">
+        <thead>
+        <tr>
+            <th data-checkbox="true"></th>
+            <th data-field="id">ID</th>
+            <th data-field="title">标题</th>
+            <th data-field="platformName">商城</th>
+            <th data-field="nickname">分享人</th>
+            <th data-field="commentNumber">评论数</th>
+            <th data-field="shareTime" data-formatter="timeFormat">分享时间</th>
+            <th data-field="state" data-formatter="stateFormat">状态</th>
+        </tr>
+        </thead>
+    </table>
+</div>
+
+<!--查看model -->
+<div class="modal fade" id="showModel" tabindex="-1" role="dialog" aria-labelledby="#showModelLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="showModelLabel">京东商城</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label  class="col-sm-2 control-label">标题</label>
+                        <div class="col-sm-7">
+                            <p class="form-control-static" id="show_title">务等业务收取5元运费的运费标准。</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="col-sm-2 control-label">地域</label>
+                        <div class="col-sm-7">
+                            <p class="form-control-static" id="show_pricePonit">务等业务收取5元运费的运费标准。</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">图片</label>
+                        <div class="col-sm-7">
+                            <img  width="100" height="100" id="show_image">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="col-sm-2 control-label">介绍</label>
+                        <div class="col-sm-10">
+                            <p class="form-control-static" id="show_introduce">京东由刘强东先生于1998年在中关村创立，并于2004年涉足电子商务领域。以自营和第三方卖家运营的模式，开展在线销售综合品类商品、虚拟产品和服务等业务。京东采取自提货物无运费，自营商品企业及钻石会员满59元包邮，其他会员满79元包邮；不满相应免邮金额收取5元运费的运费标准。</p>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--新增类型model -->
+<div class="modal fade" id="addCdyModel" tabindex="-1" role="dialog" aria-labelledby="addCdyModelLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="addCdyModelLabel">新增</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">标题</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="title"  placeholder="请输入标题">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="col-sm-2 control-label">价格卖点</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="pricePoint" placeholder="卖点，例如卷后88元">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="col-sm-2 control-label">标签</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="label"  placeholder="用空格隔开">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="col-sm-2 control-label">推荐理由</label>
+                        <div class="col-sm-9">
+                            <textarea class="form-control" id="reason" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">图片</label>
+                        <div class="col-sm-9">
+                            <input type="hidden" id="imageAddr">
+                            <img id="imgBox"  width="100" height="100">
+                            <a class="btn btn-default" onclick="$('input[id=lefile]').click();">选择图片</a>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">链接</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="link"  placeholder="优惠信息的网页地址">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="col-sm-2 control-label">所属平台</label>
+                        <div class="col-sm-9">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default dropdown-toggle"
+                                        data-toggle="dropdown" id="platformId" platformId ="-1">
+                                    选择平台<span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu" id="platformMenu">
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="col-sm-2 control-label">分类</label>
+                        <div class="col-sm-9">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default dropdown-toggle"
+                                        data-toggle="dropdown" id="pId" pId ="-1">
+                                    父类<span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu" id="pIdMenu">
+
+                                </ul>
+                            </div>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default dropdown-toggle"
+                                        data-toggle="dropdown" id="cId" cId ="-1">
+                                    子类<span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu" id="cIdMenu">
+
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" onclick="addCommodity()">提交</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 图片上传 -->
+<form id="imageForm" enctype="multipart/form-data"><input name="image" type="file" id="lefile" style="display: none"></form>
+<script src="../common/js/commodity.js"></script>
+</body>
+</html>

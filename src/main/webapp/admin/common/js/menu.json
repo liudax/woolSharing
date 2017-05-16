@@ -25,9 +25,9 @@
             "order":"1",
             "isHeader":"0",
             "childMenus":[
-                    {"id":"6","name":"分类管理","parentId":"6","url":"page/home.html","icon":"","order":"1","isHeader":"0","childMenus":""},
-                    {"id":"7","name":"商家管理","parentId":"6","url":"page/home.html","icon":"","order":"1","isHeader":"0","childMenus":""},
-                    {"id":"8","name":"信息管理","parentId":"6","url":"page/home.html","icon":"","order":"1","isHeader":"0","childMenus":""}
+                    {"id":"6","name":"分类管理","parentId":"6","url":"page/type.html","icon":"","order":"1","isHeader":"0","childMenus":""},
+                    {"id":"7","name":"商家管理","parentId":"6","url":"page/platform.html","icon":"","order":"1","isHeader":"0","childMenus":""},
+                    {"id":"8","name":"信息管理","parentId":"6","url":"page/commodity.html","icon":"","order":"1","isHeader":"0","childMenus":""}
             ]}
     ]
   }

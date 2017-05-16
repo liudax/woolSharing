@@ -39,6 +39,10 @@ public class  CommodityService implements ICommodityService {
         return dao.addCommodity(commodity)==1?true:false;
     }
 
+    public int updateCommodityState(String[] ids, int newState,String editorId) {
+        return dao.updateCommodityState(ids,newState);
+    }
+
     public List<Map<String, Object>> getDetailedList(QueryPojo query) {
 
         return dao.getDetailedList(query);

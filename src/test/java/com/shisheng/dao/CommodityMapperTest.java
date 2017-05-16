@@ -11,9 +11,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * Created by Magic on 2017/4/17.
@@ -60,6 +57,12 @@ public class CommodityMapperTest {
          link, editor_id' at line 1
 
          */
+    }
+    @Test
+    public void updateCommodity() throws Exception{
+        String[] ids = new String[]{"20170516231510097","20170516231558247"};
+        int count = dao.updateCommodityState(ids,1);
+        System.out.println(count);
     }
 
 

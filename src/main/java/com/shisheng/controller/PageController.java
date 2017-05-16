@@ -216,7 +216,7 @@ public class PageController {
 
 
     @ResponseBody
-    @RequestMapping(value = "/center/uploadImage",method = RequestMethod.POST)
+    @RequestMapping(value = {"/center/uploadImage","/admin/uploadImage"},method = RequestMethod.POST)
     public String uploadImage(@RequestParam(value ="image")MultipartFile image){
         String name = image.getName();
         return PictureOperation.upload(image);

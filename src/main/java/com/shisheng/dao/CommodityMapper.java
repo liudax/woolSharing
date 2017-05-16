@@ -12,6 +12,10 @@ public interface CommodityMapper {
     //添加一个商品信息
     int addCommodity(Commodity commodity);
 
+    int updateCommodityState(@Param("ids") String[] ids,
+                             @Param("newState")int newState,
+                             @Param("editorId")String editorId);
+
     //根据条件查询商品明细列表
     List<Map<String,Object>> getDetailedList(QueryPojo query);
 

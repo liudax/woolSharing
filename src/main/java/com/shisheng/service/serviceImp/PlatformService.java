@@ -17,6 +17,18 @@ public class PlatformService implements IPlatformService {
     @Autowired
     PlatformMapper dao;
 
+    public int addPlatform(Platform platform) {
+        return dao.addPlatform(platform);
+    }
+
+    public int updatePlatform(Platform platform) {
+        return dao.updatePlatform(platform);
+    }
+
+    public int deletePlatformById(String id) {
+        return dao.deletePlatformById(id);
+    }
+
     public List<Platform> getPlatformList() {
 
         return  dao.getPlatformList();

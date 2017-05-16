@@ -8,8 +8,29 @@
     </select>
 
     <insert id="addChildType">
-
-
+        INSERT ignore INTO child_commodity_type(id,type_name,parent_id)
+        VALUES (#{id},#{typeName},#{parentId})
     </insert>
+
+    <update id="updateChildTypeName">
+        UPDATE child_commodity_type
+        set type_name = #{newTypeName}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteChildType">
+        DELETE FROM child_commodity_type
+        WHERE id = #{id}
+    </delete>
+
+    <select id="getChildList" resultType="map">
+      SELECT
+        c.id,c.type_name AS typeName,
+        c.parent_id AS parentId,
+        p.type_name AS parentTypeName
+        FROM child_commodity_type c
+        LEFT JOIN parent_commodity_type p ON c.parent_id =p.id
+        WHERE p.id = #{parentId}
+    </select>
 
 </mapper>

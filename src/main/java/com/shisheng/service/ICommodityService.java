@@ -14,6 +14,8 @@ public interface ICommodityService {
 
      Boolean addCommodity(Commodity commodity);
 
+     int updateCommodityState(String[] ids,int newState,String editorId);
+
      List<Map<String,Object>> getDetailedList(QueryPojo query);
 
      Map<String,Object> getDetail(String id);

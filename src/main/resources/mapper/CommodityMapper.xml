@@ -18,6 +18,15 @@
       )
   </insert>
 
+  <update id="updateCommodityState">
+    UPDATE commodity
+    SET state = #{newState},editor_id = #{editorId}
+    WHERE
+    <foreach item="id" collection="ids" separator="or" >
+      id=#{id}
+    </foreach>
+  </update>
+
 
   <select id="getCommodityDetail" resultType="map" >
     <include refid="pup"></include>
@@ -56,7 +65,9 @@
     <if test="null!=order and ''!=order">
         ORDER BY ${order}
     </if>
-    LIMIT #{offset},#{rows}
+    <if test="rows!=-1">
+      LIMIT #{offset},#{rows}
+    </if>
   </select>
 
 

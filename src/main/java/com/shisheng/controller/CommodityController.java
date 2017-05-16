@@ -39,6 +39,18 @@ public class CommodityController {
     }
 
     @ResponseBody
+    @RequestMapping(value = "/admin/ajax/addCommodity",method = RequestMethod.POST)
+    public Boolean addCommodityWithAdmin(Commodity newCommodity,HttpSession session){
+        User user = (User)session.getAttribute("editor");
+        newCommodity.setUserId(user.getId());
+        newCommodity.setType("站内推荐");
+        newCommodity.setState(1);
+        newCommodity.setId(EntityIDFactory.createId());
+        newCommodity.setShareTime(new Date());
+        return  service.addCommodity(newCommodity);
+    }
+
+    @ResponseBody
     @RequestMapping(value = "/center/ajax/deleteCommodity",method = RequestMethod.POST)
     public Boolean deleteCommodity(@RequestParam("id") String id,HttpSession session){
         Map<String,Object> cdy = service.getDetail(id);
@@ -104,6 +116,46 @@ public class CommodityController {
         pojo.setRows(10);
         pojo.setStates(states);
         return service.getDetailedList(pojo);
+    }
+
+    @ResponseBody
+    @RequestMapping(value ="/admin/ajax/adminCommodityList",
+            produces = "application/json;charset=utf-8",
+            method = RequestMethod.GET)
+    public List<Map<String,Object>> adminCommodityList(Integer state){
+        QueryPojo pojo = new QueryPojo();
+        int[] states;
+        if(state==-1 || state ==null){
+            states = new int[]{0,1,2,3,4};
+        }else{
+            states = new int[]{state};
+        }
+        pojo.setStates(states);
+        pojo.setOffset(0);
+        pojo.setRows(-1);
+        pojo.setOrder("a.share_time desc");
+        return service.getDetailedList(pojo);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/admin/ajax/AdminDeleteCommodity",method = RequestMethod.POST)
+    public Boolean AdminDeleteCommodity(@RequestParam("id") String id){
+
+        return  service.deleteCommodity(id);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/admin/ajax/changeCommodityState",method = RequestMethod.POST)
+    public Boolean changeCommodityState(@RequestParam("idsStr") String idsStr,
+                                        @RequestParam("newState")int newState,
+                                        HttpSession session){
+        String[] ids ={};
+        if(idsStr!=null){
+            ids = idsStr.split(",");
+            User user = (User)session.getAttribute("editor");
+            service.updateCommodityState(ids,newState,user.getId());
+        }
+        return true;
     }
 
 

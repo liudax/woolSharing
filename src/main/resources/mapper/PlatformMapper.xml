@@ -4,10 +4,24 @@
 
   <insert id="addPlatform" parameterType="Platform" >
     insert into platform (id, platform_name, link, 
-      image_addr, introduce)
+      image_addr, introduce,region)
     values (#{id,jdbcType=VARCHAR}, #{platformName,jdbcType=VARCHAR}, #{link,jdbcType=VARCHAR}, 
-      #{imageAddr,jdbcType=VARCHAR}, #{introduce,jdbcType=LONGVARCHAR})
+      #{imageAddr,jdbcType=VARCHAR}, #{introduce,jdbcType=LONGVARCHAR},#{region,jdbcType=VARCHAR})
   </insert>
+
+  <update id="updatePlatform" parameterType="Platform">
+      UPDATE platform
+       set platform_name = #{platformName},
+        introduce = #{introduce},
+        link = #{link},
+        image_addr = #{imageAddr},
+        region = #{region}
+        WHERE id = #{id}
+  </update>
+
+  <delete id="deletePlatformById">
+    DELETE FROM platform WHERE id = #{id}
+  </delete>
 
   <select id="getPlatformList" resultType="Platform">
     SELECT * FROM  platform

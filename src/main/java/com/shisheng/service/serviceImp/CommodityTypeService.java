@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Magic on 2017/4/18.
@@ -25,11 +26,27 @@ public class CommodityTypeService implements ICommodityTypeService{
     @Autowired
     ChildCommodityTypeMapper childDao;
     public int addParentType(ParentCommodityType parentCommodityType) {
-        return 0;
+        return parentDao.addParentType(parentCommodityType);
     }
 
-    public int addChildCommodityType(ChildCommodityType childCommodityType) {
-        return 0;
+    public int addChildType(ChildCommodityType childCommodityType) {
+        return childDao.addChildType(childCommodityType);
+    }
+
+    public int updateChildTypeName(String id, String newTypeName) {
+        return childDao.updateChildTypeName(id,newTypeName);
+    }
+
+    public int updateParentTypeName(String id, String newTypeName) {
+        return parentDao.updateParentTypeName(id,newTypeName);
+    }
+
+    public int deleteChildType(String id) {
+        return childDao.deleteChildType(id);
+    }
+
+    public int deleteParentType(String id) {
+        return parentDao.deleteParentType(id);
     }
 
     public MyResult<List<ParentCommodityType>> getAllType() {
@@ -41,5 +58,14 @@ public class CommodityTypeService implements ICommodityTypeService{
         }
 
         return new MyResult<List<ParentCommodityType>>(true,pType);
+    }
+
+    public List<Map<String, Object>> getParentList() {
+
+        return parentDao.getParentList();
+    }
+
+    public List<Map<String, Object>> getChildList(String parentId) {
+        return childDao.getChildList(parentId);
     }
 }

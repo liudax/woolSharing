@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <title>分类管理</title>
+    <link rel="stylesheet" href="../common/css/bootstrap.css">
+    <link rel="stylesheet" href="../common/css/bootstrap-table.css">
+    <script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="/js/jquery-form.js"></script>
+    <script type="text/javascript" src="../common/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../common/js/bootstrap-table.min.js"></script>
+    <script type="text/javascript" src="../common/js/bootstrap-table-zh-CN.min.js"></script>
+</head>
+<body>
+<div id="platformToolbar" class="btn-group">
+    <button  type="button" class="btn btn-default" onclick="showAddModel()">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
+    </button>
+    <button  type="button" class="btn btn-default" onclick="showModel()">
+        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查看
+    </button>
+    <button  type="button" class="btn btn-default" data-toggle="modal" onclick="showEditModel()">
+        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>修改
+    </button>
+    <button  type="button" class="btn btn-default" data-toggle="modal" onclick="deletePlatform()">
+        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
+    </button>
+</div>
+<div class="container" style="width: 100%;padding: 20px">
+    <table id="platformTable">
+        <thead>
+        <tr>
+            <th data-radio="true"></th>
+            <th data-field="id">ID</th>
+            <th data-field="imageAddr">图片名</th>
+            <th data-field="platformName">名称</th>
+            <th data-field="region">地域</th>
+            <th data-field="link">网址</th>
+            <th data-field="introduce">介绍</th>
+        </tr>
+        </thead>
+    </table>
+</div>
+
+<!--查看model -->
+<div class="modal fade" id="showModel" tabindex="-1" role="dialog" aria-labelledby="#showModelLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="showModelLabel">京东商城</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label  class="col-sm-2 control-label">网址</label>
+                        <div class="col-sm-7">
+                            <p class="form-control-static" id="show_link">务等业务收取5元运费的运费标准。</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="col-sm-2 control-label">地域</label>
+                        <div class="col-sm-7">
+                            <p class="form-control-static" id="show_region">务等业务收取5元运费的运费标准。</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">图片</label>
+                        <div class="col-sm-7">
+                            <img  width="100" height="100" id="show_image">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="col-sm-2 control-label">介绍</label>
+                        <div class="col-sm-10">
+                            <p class="form-control-static" id="show_introduce">京东由刘强东先生于1998年在中关村创立，并于2004年涉足电子商务领域。以自营和第三方卖家运营的模式，开展在线销售综合品类商品、虚拟产品和服务等业务。京东采取自提货物无运费，自营商品企业及钻石会员满59元包邮，其他会员满79元包邮；不满相应免邮金额收取5元运费的运费标准。</p>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--新增类型model -->
+<div class="modal fade" id="addModel" tabindex="-1" role="dialog" aria-labelledby="#addModelLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="addModelLabel">新增商家平台</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form">
+                    <input type="hidden" id="edit_id">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">名称</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control"  id="platformName" placeholder="请输入商城名">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="col-sm-2 control-label">网址</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="link" placeholder="请输入商城官网首页">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="col-sm-2 control-label">地域</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="region" value="国内" placeholder="请输入地域">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">图片</label>
+                        <div class="col-sm-9">
+                            <input type="hidden" id="imageAddr">
+                            <img id="imgBox"  width="100" height="100">
+                            <a class="btn btn-default" onclick="$('input[id=lefile]').click();">选择图片</a>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="col-sm-2 control-label">商城介绍</label>
+                        <div class="col-sm-9">
+                           <textarea class="form-control" id="introduce" rows="4"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="method">提交</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 图片上传 -->
+<form id="imageForm" enctype="multipart/form-data"><input name="image" type="file" id="lefile" style="display: none"></form>
+
+<script src="../common/js/platform.js"></script>
+</body>
+</html>
