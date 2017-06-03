@@ -151,7 +151,6 @@ function scrollMethod(){
 function loadHotList(){
     if($("#hotList").length==0)
         return;
-
     var storage=window.sessionStorage;
     var html=storage.getItem("hotList");
     $("#hotList").empty();
@@ -166,7 +165,7 @@ function loadHotList(){
                         if(i==5) break;
                         var cdy = result[i];
                         html+="<ul class='clearfix ul_box '>";
-                        html+=" <li class='goodsimg'><a href='"+cdy.id+"'>";
+                        html+=" <li class='goodsimg'><a href='/"+cdy.id+"/detail'>";
                         html+="<img class='B_blue' alt='"+cdy.title+"' src='/"+cdy.imageAddr+"/image'></a></li>";
                         html+=" <li class='name'><a title='"+cdy.title+"' href='/"+cdy.id+"/detail'>"+cdy.title+"</a></li> </ul>";
                     }
@@ -203,7 +202,7 @@ function loadCommodityType(){
                         html+="<li><a href='/type/"+list[i].id+"' _hover-ignore='1'>"+list[i].typeName+"</a> <ul>";
                         var children = list[i].children;
                         for(var j = 0 ;j <children.length;j++){
-                            html+=" <li><a href='/type/"+list[j].id+"'>"+children[j].typeName+"</a></li>"
+                            html+=" <li><a href='/type/"+children[j].id+"'>"+children[j].typeName+"</a></li>"
                         }
                         html+="</ul></li>";
                     }

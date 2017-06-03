@@ -2,6 +2,7 @@ package com.shisheng.dao;
 
 import com.shisheng.entity.Commodity;
 import com.shisheng.util.EntityIDFactory;
+import com.sun.tools.doclets.formats.html.SourceToHTMLConverter;
 import org.slf4j.Logger;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,7 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.io.File;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Magic on 2017/4/17.
@@ -21,6 +24,9 @@ import java.util.Date;
 public class CommodityMapperTest {
     @Autowired
     CommodityMapper dao;
+
+    @Autowired
+    PlatformMapper platformMapper;
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -61,8 +67,13 @@ public class CommodityMapperTest {
     @Test
     public void updateCommodity() throws Exception{
         String[] ids = new String[]{"20170516231510097","20170516231558247"};
-        int count = dao.updateCommodityState(ids,1);
+        int count = dao.updateCommodityState(ids,1,null);
         System.out.println(count);
+    }
+
+    @Test
+    public void getImageAddr() throws Exception{
+
     }
 
 

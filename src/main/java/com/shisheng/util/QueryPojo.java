@@ -4,21 +4,13 @@ package com.shisheng.util;
  * Created by Magic on 2017/4/26.
  */
 public class QueryPojo {
-
     private int[] states;
-
     private String search;
-
     private String shareType;
-
     private String typeId;
-
     private String patformId;
-
     private int offset;
-
     private int rows;
-
     private String userId;
 
     public String getUserId() {
@@ -44,6 +36,7 @@ public class QueryPojo {
         this.states= a;
         this.offset = 0;
         this.rows = 5;
+        this.order = "a.share_time desc";
     }
 
     public String getPatformId() {

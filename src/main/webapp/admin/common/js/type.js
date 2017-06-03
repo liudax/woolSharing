@@ -80,6 +80,7 @@ function addType() {
         success:function (result) {
             if(result.success){
                 tableRefresh();
+                clearInput();
                 $("#addModel").modal("hide");
             }else{
                 alert(result.message);
@@ -101,6 +102,7 @@ function editType() {
             console.log(result);
             if(result.success){
                 tableRefresh();
+                clearInput();
                 $("#editModel").modal("hide");
             }else{
                 alert(result.message);
@@ -137,10 +139,15 @@ function removeType() {
 
 function tableRefresh() {
     if(op.isParent!=1){
-        alert("开始刷新子表格 , 父ID为" + op.curPId);
+        //alert("开始刷新子表格 , 父ID为" + op.curPId);
         $('#childTypeTable').bootstrapTable("refresh",{query: {parentId:op.curPId}});
+        $('#typeTable').bootstrapTable("refresh");
     }else{
-        alert("开始刷新父表格");
+        //alert("开始刷新父表格");
         $('#typeTable').bootstrapTable("refresh");
     }
+}
+function  clearInput() {
+    $("#typeId").val("");
+    $("#typeName").val("");
 }

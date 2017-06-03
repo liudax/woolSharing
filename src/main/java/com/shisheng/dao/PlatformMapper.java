@@ -15,4 +15,6 @@ public interface PlatformMapper {
     List<Platform> getPlatformList();
 
     Platform getPlatformDetail(String id);
+
+    List<String> getImageAddrs();
 }

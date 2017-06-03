@@ -40,7 +40,7 @@ public class  CommodityService implements ICommodityService {
     }
 
     public int updateCommodityState(String[] ids, int newState,String editorId) {
-        return dao.updateCommodityState(ids,newState);
+        return dao.updateCommodityState(ids,newState,editorId);
     }
 
     public List<Map<String, Object>> getDetailedList(QueryPojo query) {
@@ -59,6 +59,10 @@ public class  CommodityService implements ICommodityService {
         int count = dao.deleteCommodity(id);
         commentMapper.deleteByCommodityId(id);
         return count==1?true:false;
+    }
+
+    public Boolean updateCommodity(Commodity commodity) {
+        return dao.updateCommodity(commodity)==1?true:false;
     }
 
 }

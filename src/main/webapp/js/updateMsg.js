@@ -1,17 +1,38 @@
 var allType = new Array();
 var newCommodity= new Object();
-
+var oldCommodity = new Object();
 $(function () {
     init();
 })
 
 function init() {
+    loadData();
     loadPlatform();
     loadParent();
+}
+
+function loadData() {
+    var id = $("#id").val();
+    $.ajax({
+        url:"/center/ajax/getDetail?id="+id,
+        sync:false,
+        success:function (data) {
+            oldCommodity = data;
+            $("#title").val(oldCommodity.title);
+            $("#pricePoint").val(oldCommodity.pricePoint);
+            $("#label").val(oldCommodity.label);
+            $("#reason").val(oldCommodity.reason);
+            $("#imageAddr").val(oldCommodity.imageAddr);
+            $('#imgBox').attr("src","/"+oldCommodity.imageAddr+"/image");
+            $("#link").val(oldCommodity.link);
+        }
+    });
+
 }
 function loadPlatform() {
     $.ajax({
         url:"/ajax/getPlatformList",
+        sync:false,
         success:function (result) {
             var html ="";
             for(var i in result){
@@ -19,6 +40,7 @@ function loadPlatform() {
                 html+="<option value='"+platform.id+"'>"+platform.platformName+"</option>"
             }
             $("#platformId").append(html);
+            $("#platformId").val(oldCommodity.platformId);
         }
     })
 }
@@ -26,6 +48,7 @@ function loadPlatform() {
 function loadParent() {
     $.ajax({
         url:"/ajax/getAllType",
+        sync:false,
         success:function (result) {
             allType = result.data;
             var html ="";
@@ -33,13 +56,16 @@ function loadParent() {
                 var type = allType[i];
                 html+="<option value='"+type.id+"'>"+type.typeName+"</option>"
             }
+
             $("#parentTypeId").append(html);
-            getChildren(allType[0].id);
+
+            $("#parentTypeId").val(oldCommodity.parentTypeId);
+            getChildren(oldCommodity.parentTypeId);
+            $("#childTypeId").val(oldCommodity.childTypeId);
+
             $("#parentTypeId").change(function () {
                 getChildren($(this).val());
             });
-
-
         }
     })
 }
@@ -59,9 +85,12 @@ function getChildren(id) {
         html+="<option value='"+child.id+"'>"+child.typeName+"</option>"
     }
     $("#childTypeId").append(html);
+
 }
 
-function addCommodity() {
+
+function updateCommodity() {
+    newCommodity.id=$("#id").val();
     newCommodity.title = $("#title").val();
     newCommodity.pricePoint = $("#pricePoint").val();
     newCommodity.label = $("#label").val();
@@ -73,23 +102,22 @@ function addCommodity() {
     newCommodity.childTypeId = $("#childTypeId").val();
     if(checkArgs()){
         $.ajax({
-            url:"/center/ajax/addCommodity",
+            url:"/center/ajax/updateCommodity",
             data:newCommodity,
             type:"post",
             success:function (data) {
                 console.log(data);
                 if(data){
-                    alert("添加成功");
+                    alert("修改成功");
                     window.location.href="/center/myMsg";
                 }else {
-                    alert("添加失败");
+                    alert("没有任何修改");
                 }
             }
         })
     }
-    
-}
 
+}
 function checkArgs() {
     if( newCommodity.title==null ||  newCommodity.title ==""){
         alert("标题不能为空");
@@ -129,8 +157,6 @@ function checkArgs() {
     }
     return true;
 }
-
-
 $('input[id=uploadFile]').change(function() {
     var imgPath = $(this).val();
     if (imgPath == "") {

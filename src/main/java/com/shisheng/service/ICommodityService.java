@@ -22,4 +22,6 @@ public interface ICommodityService {
 
      Boolean deleteCommodity(String id);
 
+     Boolean updateCommodity(Commodity commodity);
+
 }

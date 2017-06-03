@@ -26,30 +26,54 @@ public class CommodityController {
     @Autowired
     ICommodityService service;
 
-
+    /**
+     * 修改优惠（管理员，用户）
+     * @param newCommodity
+     * @param request
+     * @return
+     */
     @ResponseBody
-    @RequestMapping(value = "/center/ajax/addCommodity",method = RequestMethod.POST)
-    public Boolean addCommodity(Commodity newCommodity,HttpSession session){
-        User user = (User)session.getAttribute("user");
-        newCommodity.setUserId(user.getId());
-        newCommodity.setType("用户分享");
+    @RequestMapping(value = {"/center/ajax/addCommodity","/admin/ajax/addCommodity"},method = RequestMethod.POST)
+    public Boolean addCommodity(Commodity newCommodity,HttpServletRequest request){
+        String path = request.getServletPath();
+        HttpSession session = request.getSession();
+        if(path.startsWith("/admin")){
+            User user = (User)session.getAttribute("editor");
+            newCommodity.setUserId(user.getId());
+            newCommodity.setType("站内推荐");
+            newCommodity.setState(1);
+        }else{
+            User user = (User)session.getAttribute("user");
+            newCommodity.setUserId(user.getId());
+            newCommodity.setType("用户分享");
+        }
+
+
         newCommodity.setId(EntityIDFactory.createId());
         newCommodity.setShareTime(new Date());
         return  service.addCommodity(newCommodity);
     }
 
+
     @ResponseBody
-    @RequestMapping(value = "/admin/ajax/addCommodity",method = RequestMethod.POST)
-    public Boolean addCommodityWithAdmin(Commodity newCommodity,HttpSession session){
-        User user = (User)session.getAttribute("editor");
-        newCommodity.setUserId(user.getId());
-        newCommodity.setType("站内推荐");
-        newCommodity.setState(1);
-        newCommodity.setId(EntityIDFactory.createId());
-        newCommodity.setShareTime(new Date());
-        return  service.addCommodity(newCommodity);
+    @RequestMapping(value = {"/center/ajax/updateCommodity","/admin/ajax/updateCommodity"},method = RequestMethod.POST)
+    public Boolean updateCommodity(Commodity newCommodity){
+        newCommodity.setState(0);
+        return service.updateCommodity(newCommodity);
     }
 
+    @ResponseBody
+    @RequestMapping(value = {"/center/ajax/getDetail","/admin/ajax/getDetail"})
+    public Map<String,Object> getDetail(String id){
+        return service.getDetail(id);
+    }
+
+    /**
+     * 个人中心删除优惠
+     * @param id
+     * @param session
+     * @return
+     */
     @ResponseBody
     @RequestMapping(value = "/center/ajax/deleteCommodity",method = RequestMethod.POST)
     public Boolean deleteCommodity(@RequestParam("id") String id,HttpSession session){
@@ -64,37 +88,33 @@ public class CommodityController {
         return  service.deleteCommodity(id);
     }
 
+    /**
+     * 下拉底部刷新
+     * @param page
+     * @param session
+     * @return
+     */
     @ResponseBody
     @RequestMapping(value ="/ajax/appendNextPage",
             produces = "application/json;charset=utf-8",
             method = RequestMethod.GET)
-    public List<Map<String,Object>> appendNextPage(String search,Integer page,String path, HttpServletRequest request){
-        List<Map<String,Object>> list;
-        QueryPojo pojo = new QueryPojo();
+    public List<Map<String,Object>> appendNextPage(Integer page, HttpSession session){
+        QueryPojo pojo = (QueryPojo) session.getAttribute("qurey");
         pojo.setOffset((page-1) * 5);
-        if(path.startsWith("/type")){
-            String typeId = path.substring(path.lastIndexOf("/")+1,path.length());
-           pojo.setTypeId(typeId);
-        }
-        if("/zn".equals(path)){
-            pojo.setShareType("站内分享");
-        }
-        if("/yh".equals(path)){
-            pojo.setShareType("用户分享");
-        }
-        if("/search".equals(path)){
-          pojo.setSearch(search);
-        }
         return service.getDetailedList(pojo);
     }
 
-
+    /**
+     * 热门排行
+     * @return
+     */
     @ResponseBody
     @RequestMapping(value ="/ajax/addHotList",
             produces = "application/json;charset=utf-8",
             method = RequestMethod.GET)
     public List<Map<String,Object>> addHotList(){
         QueryPojo pojo = new QueryPojo();
+        pojo.setOrder("commentNumber desc");
         pojo.setOffset(0);
         pojo.setRows(7);
 
@@ -102,6 +122,12 @@ public class CommodityController {
     }
 
 
+    /**
+     * 个人中心获取自己发布过的优惠
+     * @param session
+     * @param page
+     * @return
+     */
     @ResponseBody
     @RequestMapping(value ="/center/ajax/getMyMsg",
             produces = "application/json;charset=utf-8",
@@ -118,6 +144,11 @@ public class CommodityController {
         return service.getDetailedList(pojo);
     }
 
+    /**
+     * 后台管理 优惠列表
+     * @param state
+     * @return
+     */
     @ResponseBody
     @RequestMapping(value ="/admin/ajax/adminCommodityList",
             produces = "application/json;charset=utf-8",

@@ -38,10 +38,10 @@
                 <h1 class="fontTitle">${pl.platformName}</h1>
                 <div class="mallAddress">
                     <h3 class="mallName">商城地址：</h3>
-                    <a href="" class="blue" target="_blank">${pl.link}</a>
+                    <a href="${pl.link}" class="blue" target="_blank">${pl.link}</a>
                     <div class="clear"></div>
                     <h3 class="mallName">地域信息：</h3>
-                    <span>国内</span>
+                    <span>${region}</span>
                 </div>
                 <div class="mallInfoBox mallInfoBox2">
                     <h3 class="mallName">商城介绍：</h3>
@@ -83,8 +83,6 @@
                 </li>
             </c:forEach>
         </ul>
-        <div class="pager"> <a href="http://www.zdzdm.com/mall/jd?page=0" class="a1">上一页</a> <a href="http://www.zdzdm.com/mall/jd?page=2" class="next_link">下一页</a></div>
-
     </section>
 
 </section>

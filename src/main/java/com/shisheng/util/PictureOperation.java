@@ -45,7 +45,7 @@ public class PictureOperation {
 
         synchronized (PictureOperation.class){
 
-            newFileName = String.valueOf(System.currentTimeMillis()) +fileName;
+            newFileName = String.valueOf(System.currentTimeMillis()) +"."+type;
         }
 
         path = "E:\\CommodityPicture\\"+newFileName;

@@ -72,10 +72,12 @@ function loadChild(id) {
         }
     }
     var html ="";
+    var first = "";
     for(var i in children){
         var child = children[i];
         html+="<li><a cId ='"+child.id+"' href='#' onclick='selectChild(this);return false'>"+child.typeName+"</a></li>";
     }
+    $("#cId").html(first+"<span class='caret'>");
     $("#cIdMenu").html(html);
 }
 
@@ -191,6 +193,7 @@ $('input[id=lefile]').change(function() {
             // 此处可对 data 作相关处理
             //alert("上传成功");
             $("#imageAddr").val(data);
+            console.log(data);
             $('#imgBox').attr("src","/"+data+"/image");
         }
     });

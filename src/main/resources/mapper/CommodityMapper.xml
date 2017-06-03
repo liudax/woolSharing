@@ -27,6 +27,25 @@
     </foreach>
   </update>
 
+  <update id="updateCommodity" parameterType="Commodity">
+    UPDATE commodity c SET
+      c.title = #{title},
+      c.price_point =#{pricePoint},
+      c.label=#{label},
+      c.reason=#{reason},
+      c.image_addr=#{imageAddr},
+      c.link=#{link},
+      c.platform_id=#{platformId},
+      c.parent_type_id=#{parentTypeId},
+      c.child_type_id=#{childTypeId},
+      c.state = #{state}
+      WHERE c.id= #{id}
+  </update>
+
+  <select id="getImageAddrs" resultType="String">
+    SELECT image_addr FROM  commodity
+  </select>
+
 
   <select id="getCommodityDetail" resultType="map" >
     <include refid="pup"></include>
@@ -36,6 +55,8 @@
   <delete id="deleteCommodity">
     DELETE FROM commodity WHERE id = #{id}
   </delete>
+
+
 
 
   <select id="getDetailedList" resultType="map" parameterType="com.shisheng.util.QueryPojo">
@@ -89,7 +110,9 @@
       a.reason ,
       a.image_addr AS imageAddr,
       t1.type_name AS childType,
+      t1.id AS childTypeId,
       t2.type_name AS parentType,
+      t2.id AS parentTypeId,
       IFNULL(f.comment_number,0) AS commentNumber,
       a.share_time AS shareTime,
       a.link,

@@ -1,5 +1,6 @@
 package com.shisheng.controller;
 
+import com.shisheng.entity.Commodity;
 import com.shisheng.entity.HotW;
 import com.shisheng.entity.Platform;
 import com.shisheng.service.ICommodityService;
@@ -7,6 +8,7 @@ import com.shisheng.service.IHotWordsService;
 import com.shisheng.service.IPlatformService;
 import com.shisheng.util.PictureOperation;
 import com.shisheng.util.QueryPojo;
+import com.sun.javadoc.SeeTag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,15 +41,21 @@ public class PageController {
     IHotWordsService hotWordsService;
 
 
+
+
     /**
      *
      * @param model
      * @return
      */
     @RequestMapping(value = {"/index","/index.jj"},method = RequestMethod.GET)
-    public String index(Model model){
+    public String index(Model model,HttpSession session){
         //获取信息列表
+
         QueryPojo qurey = new QueryPojo();
+        qurey.setStates(new int[]{1,2});
+        qurey.setOrder("a.state desc,shareTime desc");
+        session.setAttribute("qurey",qurey);
         List<Map<String,Object>> cdyList = commodityService.getDetailedList(qurey);
 
         //获取商城列表
@@ -72,6 +80,8 @@ public class PageController {
         String shareType = "/zn".equals(request.getServletPath())?"站内推荐":"用户分享";
         QueryPojo pojo = new QueryPojo();
         pojo.setShareType(shareType);
+        pojo.setOrder("shareTime desc");
+        request.getSession().setAttribute("qurey",pojo);
 
         List<Map<String,Object>> list = commodityService.getDetailedList(pojo);
         model.addAttribute("cdyList",list);
@@ -90,6 +100,8 @@ public class PageController {
 
         QueryPojo pojo = new QueryPojo();
         pojo.setSearch(search);
+        pojo.setOrder("shareTime desc");
+        session.setAttribute("qurey",pojo);
 
         //存入搜索词汇
         try{
@@ -117,6 +129,8 @@ public class PageController {
 
         QueryPojo pojo = new QueryPojo();
         pojo.setTypeId(typeId);
+        pojo.setOrder("shareTime desc");
+        session.setAttribute("qurey",pojo);
         List<Map<String,Object>> list = commodityService.getDetailedList(pojo);
         model.addAttribute("cdyList",list);
         return "list";
@@ -131,8 +145,12 @@ public class PageController {
      */
     @RequestMapping(value = "/{id}/detail",method = RequestMethod.GET)
     public String cdyDetail(@PathVariable("id") String id , Model model){
-        model.addAttribute("cdy",commodityService.getDetail(id));
-
+        Map<String,Object> cdy = commodityService.getDetail(id);
+        Integer state = (Integer) cdy.get("state");
+        if(state!=1 && state !=2){
+            return "detailError";
+        }
+        model.addAttribute("cdy",cdy);
         return "detail";
     }
 

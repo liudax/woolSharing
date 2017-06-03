@@ -1,9 +1,11 @@
 package com.shisheng.controller;
 
+import com.shisheng.entity.Commodity;
 import com.shisheng.entity.User;
 import com.shisheng.service.IUserService;
 import com.shisheng.util.*;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -88,9 +90,9 @@ public class UserController {
 
 
     @RequestMapping("/center/{page}")
-    public String userPage(@PathVariable("page") String page){
+    public String userPage(@PathVariable("page") String page,String id, Model model){
         String path = "user/"+page;
-        //System.out.println(path);
+        if(page.equals("updateMsg")){model.addAttribute("updateId",id);}
         return path;
     }
 
@@ -102,6 +104,7 @@ public class UserController {
         session.setAttribute("user",service.updateUser(user));
         return "redirect:/center/info";
     }
+
 
     @ResponseBody
     @RequestMapping(value = "/center/updatePassword",method = RequestMethod.POST)
@@ -115,8 +118,7 @@ public class UserController {
 
     @ResponseBody
     @RequestMapping(value = "/user/login",
-            produces = "application/json;charset=utf-8",
-            method = RequestMethod.POST)
+            produces = "application/json;charset=utf-8")
     public MyResult<User> login(@RequestParam("loginName")String loginName,
                                 @RequestParam("password")String password,
                                 //@RequestParam("code")String code,

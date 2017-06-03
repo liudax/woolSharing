@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=10"/>
@@ -42,6 +43,9 @@
             <!--
             加载优惠信息列表
             -->
+            <c:if test="${fn:length(cdyList)==0}">
+                <h1 style="text-align: center">没有数据！</h1>
+            </c:if>
             <c:forEach var="cdy" items="${cdyList}">
                 <div class="new_info_list">
                     <dl>
@@ -49,7 +53,7 @@
                         <dd>
                             <a href='' target='_blank' title='${cdy.id}/detail'><img src='/${cdy.imageAddr}/image' class='lazy' alt='加载中'></a>
                             <div class='tags'>
-                                <span>分类：<a href="">${cdy.type}</a></span>
+                                <span>分类：${cdy.type}</span>
                                 <span class='fr'>post by ${cdy.nickname} / <fmt:formatDate value="${cdy.shareTime}" pattern="yyyy/MM/dd  HH:mm:ss"></fmt:formatDate><a href='/${cdy.id}/detail#comment-box'>评论(${cdy.commentNumber})</a></span></div>
                             <div class='list_txt'>
                                 <p>
@@ -64,7 +68,7 @@
                             </c:forTokens>
         </span>
                             <span class='fr buy'>
-                                <a class="" href="#" num="${cdy.id}" onclick="collect(this);return false">收藏</a>
+                                <a class="mall" href="#" num="${cdy.id}" onclick="collect(this);return false">收藏</a>
                 <a href="/mall/${cdy.platformId}" target='_blank' class='mall'>${cdy.platformName}</a>
                 <a target='_blank' isconvert='1' href='${cdy.link}' rel='nofollow'>直达链接 ></a>
         </span>

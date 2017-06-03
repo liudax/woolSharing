@@ -30,7 +30,7 @@
                         <dd>
                             <div class="sjdqOutBorder">
                                 <span style="position:relative;top:3px;left:6px;color:#777">${mall.platformName}</span>
-                                <a class="sjdqLogo" href="/${mall.id}/detail">
+                                <a class="sjdqLogo" href="/mall/${mall.id}">
                                     <img  src="/${mall.imageAddr}/image" alt="${mall.platformName}">
                                 </a>
                             </div>

@@ -19,6 +19,10 @@
         WHERE id = #{id}
   </update>
 
+    <select id="getImageAddrs" resultType="String">
+         SELECT image_addr FROM  platform
+    </select>
+
   <delete id="deletePlatformById">
     DELETE FROM platform WHERE id = #{id}
   </delete>

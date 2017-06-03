@@ -24,4 +24,8 @@ public interface CommodityMapper {
 
     int deleteCommodity(String id);
 
+    List<String> getImageAddrs();
+
+    int updateCommodity(Commodity commodity);
+
 }

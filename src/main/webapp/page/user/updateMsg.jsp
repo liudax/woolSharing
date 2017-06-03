@@ -23,8 +23,8 @@
     <div class="left col-1 left-memu">
         <ul>
             <li><a href="/center/info">个人信息</a></li>
-            <li class="on"><a href="/center/newMsg">在线投稿</a></li>
-            <li><a href="/center/myMsg">我的投稿</a></li>
+            <li><a href="/center/newMsg">在线投稿</a></li>
+            <li class="on"><a href="/center/myMsg">我的投稿</a></li>
             <li><a href="/center/myCollect">我的收藏</a></li>
             <li><a href="/center/myComment">我的评论</a></li>
             <li><a href="/login.html">安全退出</a></li>
@@ -34,10 +34,11 @@
     <!-- 内容部分 -->
 
     <div class="content_right left" style="margin-bottom: 50px">
-        <h3 class="title1">在线投稿</h3>
+        <h3 class="title1">优惠修改</h3>
+        <input type="hidden" id="id" value="${updateId}">
         <div class="input_div">
             <span>标题:</span>
-            <input class="input_text" id="title" type="text" style="width: 300px;">
+            <input class="input_text"  id="title" type="text" style="width: 300px;">
         </div>
         <div class="input_div">
             <span>价格卖点:</span>
@@ -55,14 +56,14 @@
             <span>图片:</span>
             <form id="imageForm" enctype="multipart/form-data" style="display: inline-block">
                 <input type="file" style="display: none;" id="uploadFile" name="image">
-                <img  id="imgBox" width="100" height="100">
+                <img  id="imgBox" src="/${cdy.imageAddr}/image" width="100" height="100">
                 <input type="button" onclick="$('#uploadFile').click()" value="选择图片">
             </form>
-            <input type="hidden" id="imageAddr">
+            <input type="hidden" id="imageAddr" value="${cdy.imageAddr}">
         </div>
         <div class="input_div">
             <span>商品链接:</span>
-            <input class="input_text" id="link" type="text" style="width: 300px;">
+            <input class="input_text"  id="link" type="text" style="width: 300px;">
         </div>
         <style>
             .input_div select{
@@ -83,13 +84,14 @@
             </select>
 
             <select  id="childTypeId">
+                <option value=''>子类型</option>
             </select>
         </div>
-        <input type="button" onclick="addCommodity()" value="提交" style="margin-left: 160px;width: 60px;height: 30px">
+        <input type="button" onclick="updateCommodity()" value="修改" style="margin-left: 160px;width: 60px;height: 30px">
     </div>
 
 </div>
 <%@include file="/page/common/footer.html"%>
 </body>
-<script type="text/javascript" src="/js/myMsg.js"></script>
+<script type="text/javascript" src="/js/updateMsg.js"></script>
 </html>

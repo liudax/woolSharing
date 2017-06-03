@@ -33,7 +33,7 @@
             <dt>搜索热词</dt>
             <dd _hover-ignore="1">
                 <c:forEach var="hotWords" items="${hotWordsList}">
-                    <a href="/search?search=${hotWords.content}" target="_new">${hotWords.content}</a>
+                    <a href="/search?search=${hotWords.content}" >${hotWords.content}</a>
                 </c:forEach>
             </dd>
         </dl>
@@ -62,9 +62,9 @@
                     <dl>
                         <dt><a href='/${cdy.id}/detail' target='_blank' title="${cdy.title}">${cdy.title}<span class='red'>${cdy.pricePoint}</span></a></dt>
                         <dd>
-                            <a href='' target='_blank' title='${cdy.id}/detail'><img src='/${cdy.imageAddr}/image' class='lazy' alt='加载中'></a>
+                            <a href='/${cdy.id}/detail' target='_blank' title='${cdy.title}'><img src='/${cdy.imageAddr}/image' class='lazy' alt='加载中'></a>
                             <div class='tags'>
-                                <span>分类：<a href="">${cdy.type}</a></span>
+                                <span>分类：${cdy.type}</span>
                                 <span class='fr'>post by ${cdy.nickname} / <fmt:formatDate value="${cdy.shareTime}" pattern="yyyy/MM/dd  HH:mm:ss"></fmt:formatDate><a href='/${cdy.id}/detail#comment-box'>评论(${cdy.commentNumber})</a></span></div>
                             <div class='list_txt'>
                                 <p>
@@ -90,7 +90,7 @@
             </c:forEach>
         </div>
         <div class="content-footer">
-            <img id="loading" src="/images/loading1.gif" height="80" width="80">
+            <img id="loading" src="/images/loading1.gif" height="80" width="80" style="display: none">
             <p id="noMore" style="display: none">已经没有更多内容了!</p>
         </div>
         <style>

@@ -15,7 +15,7 @@
         <ul>
             <li><a href="/center/info">个人信息</a></li>
             <li><a href="/center/newMsg">在线投稿</a></li>
-            <li  class="on"><a href="/center/myMsg">我的投稿</a></li>
+            <li class="on"><a href="/center/myMsg">我的投稿</a></li>
             <li><a href="/center/myCollect">我的收藏</a></li>
             <li><a href="/center/myComment">我的评论</a></li>
             <li><a href="/login.html">安全退出</a></li>
@@ -30,7 +30,7 @@
                     <th>标题</th>
                     <th width="90">状态</th>
                     <th width="180">发布时间</th>
-                    <th width="40PX">操作</th>
+                    <th width="80PX">操作</th>
                 </tr>
             </thead>
             <tbody style="text-align: center" id="listBody">
@@ -91,7 +91,7 @@
                 "<td><a href='/"+cdy.id+"/detail' target='-_blank'>"+cdy.title+"</a></td>"+
                 "<td>"+stateTrans(cdy.state)+"</td>"+
                 "<td>"+format(cdy.shareTime, 'yyyy-MM-dd HH:mm:ss')+"</td>"+
-                "<td><a href='#' num='"+cdy.id+"' onclick='deleteCdy(this);return false'>删除</a> </td>"+
+                "<td><a href='/center/updateMsg?id="+cdy.id+"'>修改</a> <a href='#' num='"+cdy.id+"' onclick='deleteCdy(this);return false'>删除</a></td>"+
                 "</tr>";
         }
         $("#listBody").append(html);

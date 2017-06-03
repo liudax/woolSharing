@@ -33,6 +33,10 @@ function addNewComment(answerId,content){
     if(content===undefined){
         content = $("#content").val();
     }
+    if(content==null ||content==""){
+        alert("你还没有写评论呢");
+        return;
+    }
 
     var commodityId = $("#commodityId").val();
     var comment ={
@@ -49,6 +53,8 @@ function addNewComment(answerId,content){
                 var html="";
                 $("#content").val("");
                 html=addComment(result.data);
+                var newNum = parseInt($("#commentNumber").html())+1;
+                $("#commentNumber").html(newNum);
                 alert("评论成功");
                 $("#commentList").prepend(html);
             }else{
